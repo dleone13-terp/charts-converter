@@ -70,40 +70,49 @@ if [ "$ENC_COUNT" -eq 0 ]; then
 fi
 
 # ── Step 2: GDAL export → GeoJSON (inside container) ─────────────────
-# Verbatim from signalk-charts-provider-simple buildExportScript()
-# with multiFile=true (outputs LAYER_CHARTNAME.geojson) and parallelism=1.
-# Skip layers: DSID, C_AGGR, C_ASSO, Generic (same as the plugin).
+# Parallel branch from signalk-charts-provider-simple buildExportScript()
+# with multiFile=true and parallelism=$(nproc): per-layer ogr2ogr calls within
+# each .000 cell are fanned out via xargs -P so all CPUs are used.
 echo "[2/3] GDAL export: ${ENC_COUNT} cells → GeoJSON..."
+
+GDAL_SCRIPT=$(mktemp /tmp/gdal-XXXXX.sh)
+cat > "$GDAL_SCRIPT" <<'GDAL'
+#!/bin/bash
+set -e
+: > /output/.export-errors.log
+count=$(find /input -name '*.000' ! -name '._*' -type f | wc -l)
+i=0
+find /input -name '*.000' ! -name '._*' -type f -print0 | while IFS= read -r -d '' enc; do
+  i=$((i + 1))
+  name=$(basename "$enc" .000)
+  echo "PROGRESS: Processing $name ($i/$count)"
+  layers=$(ogrinfo -so "$enc" 2>>/output/.export-errors.log | grep -E '^[0-9]+:' | awk -F': ' '{print $2}' | awk '{print $1}')
+  printf '%s\n' $layers | xargs -P "$(nproc)" -I '{}' sh -c '
+    layer="$1" enc="$2" name="$3"
+    case "$layer" in DSID|C_AGGR|C_ASSO|Generic) exit 0 ;; esac
+    outname="${layer}_${name}"
+    if [ "$layer" = "SOUNDG" ]; then
+      ogr2ogr -f GeoJSON -oo SPLIT_MULTIPOINT=YES -oo ADD_SOUNDG_DEPTH=YES \
+        "/output/${outname}.geojson" "$enc" "$layer" 2>>/output/.export-errors.log || true
+    else
+      ogr2ogr -f GeoJSON "/output/${outname}.geojson" "$enc" "$layer" \
+        2>>/output/.export-errors.log || true
+    fi
+  ' _ '{}' "$enc" "$name"
+done
+echo "PROGRESS: Export complete"
+GDAL
+chmod +x "$GDAL_SCRIPT"
 
 docker run --rm \
   --user "$(id -u):$(id -g)" \
   -v "${ENC_DIR}:/input:ro" \
   -v "${GEOJSON_DIR}:/output:rw" \
+  -v "${GDAL_SCRIPT}:/run-gdal-export.sh:ro" \
   "$TOOLBOX" \
-  bash -c '
-set -e
-: > /output/.export-errors.log
-count=$(find /input -name '"'"'*.000'"'"' ! -name '"'"'._*'"'"' -type f | wc -l)
-i=0
-find /input -name '"'"'*.000'"'"' ! -name '"'"'._*'"'"' -type f -print0 | while IFS= read -r -d '"'"''"'"' enc; do
-  i=$((i + 1))
-  name=$(basename "$enc" .000)
-  echo "PROGRESS: Processing $name ($i/$count)"
-  layers=$(ogrinfo -so "$enc" 2>>/output/.export-errors.log | grep -E '"'"'^[0-9]+:'"'"' | awk -F'"'"': '"'"' '"'"'{print $2}'"'"' | awk '"'"'{print $1}'"'"')
-  for layer in $layers; do
-    case "$layer" in DSID|C_AGGR|C_ASSO|Generic) continue ;; esac
-    outname="${layer}_${name}"
-    if [ "$layer" = "SOUNDG" ]; then
-      ogr2ogr -f GeoJSON -oo SPLIT_MULTIPOINT=YES -oo ADD_SOUNDG_DEPTH=YES \
-        "/output/$outname.geojson" "$enc" "$layer" 2>>/output/.export-errors.log || true
-    else
-      ogr2ogr -f GeoJSON "/output/$outname.geojson" "$enc" "$layer" \
-        2>>/output/.export-errors.log || true
-    fi
-  done
-done
-echo "PROGRESS: Export complete"
-'
+  bash /run-gdal-export.sh
+
+rm -f "$GDAL_SCRIPT"
 
 rm -rf "$ENC_DIR"
 

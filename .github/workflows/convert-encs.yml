@@ -54,7 +54,6 @@ jobs:
 
     strategy:
       fail-fast: false  # a failed district does not cancel others
-      max-parallel: 4
       matrix:
         district: ${{ fromJson(needs.check-updates.outputs.districts_to_run) }}
 

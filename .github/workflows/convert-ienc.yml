@@ -1,0 +1,225 @@
+name: Convert European IENC to MBTiles
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Monday 08:00 UTC (offset from NOAA run at 06:00)
+  workflow_dispatch:
+    inputs:
+      force_countries:
+        description: >
+          Comma-separated country codes to force-convert (e.g. DE,HR),
+          or "all" to reconvert every country regardless of timestamp.
+        required: false
+        default: ''
+
+jobs:
+
+  # ── Job 1: Detect which countries changed since last run ──────────────
+  check-updates:
+    name: Check IENC source changes
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      countries_to_run: ${{ steps.check.outputs.countries_to_run }}
+      has_updates: ${{ steps.check.outputs.has_updates }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for IENC updates
+        id: check
+        env:
+          FORCE_ALL: ${{ github.event.inputs.force_countries == 'all' && 'true' || 'false' }}
+          FORCE_COUNTRIES: ${{ github.event.inputs.force_countries != 'all' && github.event.inputs.force_countries || '' }}
+        run: bash scripts/check-ienc-updates.sh
+
+      - name: Report
+        run: |
+          if [ "${{ steps.check.outputs.has_updates }}" = "true" ]; then
+            echo "Countries to convert: ${{ steps.check.outputs.countries_to_run }}"
+          else
+            echo "All countries are up-to-date — nothing to convert."
+          fi
+
+  # ── Job 2: Convert each changed country (parallel matrix) ─────────────
+  convert:
+    name: Convert ${{ matrix.country }}
+    needs: check-updates
+    if: needs.check-updates.outputs.has_updates == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: read  # pull from GHCR without rate-limiting
+
+    strategy:
+      fail-fast: false  # a failed country does not cancel others
+      matrix:
+        country: ${{ fromJson(needs.check-updates.outputs.countries_to_run) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify runner UID matches toolbox UID 1001
+        run: |
+          echo "Runner UID=$(id -u) GID=$(id -g)"
+          if [ "$(id -u)" != "1001" ]; then
+            echo "::warning::Runner UID is $(id -u), not 1001. Output dirs will be pre-chmod'd 777."
+            chmod 777 /tmp
+          fi
+
+      - name: Convert ${{ matrix.country }}
+        env:
+          TOOLBOX_IMAGE: ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0
+        run: |
+          chmod +x scripts/convert-country-ienc.sh
+          scripts/convert-country-ienc.sh "${{ matrix.country }}"
+
+      - name: Upload MBTiles artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ienc-mbtiles-${{ matrix.country }}
+          path: /tmp/enc-output/eu-ienc-${{ matrix.country }}.mbtiles
+          retention-days: 1
+
+      - name: Write failure result JSON
+        if: failure()
+        run: |
+          mkdir -p /tmp/enc-output
+          printf '{"country":"%s","success":false}\n' "${{ matrix.country }}" \
+            > /tmp/enc-output/ienc-result-${{ matrix.country }}.json
+
+      - name: Upload result artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ienc-result-${{ matrix.country }}
+          path: /tmp/enc-output/ienc-result-${{ matrix.country }}.json
+          retention-days: 1
+
+  # ── Job 3: Publish release assets and commit updated state.json ────────
+  publish:
+    name: Publish release assets
+    needs: [check-updates, convert]
+    # Run even if some matrix jobs failed so successful countries are published.
+    # Skip only if convert was cancelled.
+    if: >
+      always() &&
+      needs.check-updates.outputs.has_updates == 'true' &&
+      needs.convert.result != 'cancelled'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download MBTiles artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ienc-mbtiles-*
+          path: /tmp/mbtiles
+          merge-multiple: true
+
+      - name: Download result artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ienc-result-*
+          path: /tmp/results
+          merge-multiple: true
+
+      # Update state.json: only write urlFingerprint/lastModified/lastConverted
+      # for countries whose result JSON reports success=true.
+      - name: Update state.json
+        run: |
+          for f in /tmp/results/ienc-result-*.json; do
+            [ -f "$f" ] || continue
+            python3 - "$f" <<'PY'
+          import json, sys
+          result = json.load(open(sys.argv[1]))
+          if not result.get('success'):
+              print(f"  {result.get('country','?')}: failed — state unchanged")
+              sys.exit(0)
+          state = json.load(open('state.json'))
+          c = result['country']
+          if result.get('urlFingerprint'):
+              state['ienc'][c]['urlFingerprint'] = result['urlFingerprint']
+          if result.get('lastModified'):
+              state['ienc'][c]['lastModified'] = result['lastModified']
+          state['ienc'][c]['lastConverted'] = result.get('lastConverted')
+          json.dump(state, open('state.json', 'w'), indent=2)
+          open('state.json', 'a').write('\n')
+          print(f"  {c}: updated")
+          PY
+          done
+
+      - name: Move ienc-latest tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -f ienc-latest
+          git push origin refs/tags/ienc-latest --force
+
+      - name: Create or update ienc-latest release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          NOTES="European Inland ENC charts (IENC / S-57) converted to MBTiles by country. Updated weekly.
+
+          | File | Coverage |
+          |---|---|
+          | eu-ienc-de.mbtiles | Germany — ELWIS (Rhine, Danube, Elbe, Weser, …) |
+          | eu-ienc-at.mbtiles | Austria — Danube (DORIS/Viadonau) |
+          | eu-ienc-hr.mbtiles | Croatia — Danube, Sava, Drava |
+          | eu-ienc-rs.mbtiles | Serbia — Danube, Sava, Tisa |
+          | eu-ienc-bg.mbtiles | Bulgaria — Danube (BULRIS) |
+          | eu-ienc-pl.mbtiles | Poland — Oder system (UZS Szczecin) |
+          | eu-ienc-ch.mbtiles | Switzerland — High Rhine |
+          | eu-ienc-ro.mbtiles | Romania — Danube canals (ACN) |
+          | eu-ienc-be.mbtiles | Belgium — Wallonia + Brussels waterways |
+
+          Tile zoom range: z9–z18. Format: vector tiles (MVT / pbf).
+          See \`state.json\` in this repo for per-country conversion dates."
+
+          if gh release view ienc-latest &>/dev/null; then
+            gh release edit ienc-latest \
+              --title "European IENC MBTiles ${DATE}" \
+              --notes "$NOTES"
+          else
+            gh release create ienc-latest \
+              --title "European IENC MBTiles ${DATE}" \
+              --notes "$NOTES" \
+              --latest=false
+          fi
+
+      - name: Upload MBTiles to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for f in /tmp/mbtiles/eu-ienc-*.mbtiles; do
+            [ -f "$f" ] || continue
+            echo "Uploading $(basename "$f") ($(du -sh "$f" | cut -f1))"
+            gh release upload ienc-latest "$f" --clobber
+          done
+
+      - name: Commit updated state.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          if git diff --cached --quiet; then
+            echo "state.json unchanged (all converted countries failed)"
+          else
+            git commit -m "chore: update state.json after IENC conversion [skip ci]"
+            git push
+          fi
