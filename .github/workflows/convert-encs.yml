@@ -1,0 +1,262 @@
+name: Convert NOAA ENCs to MBTiles
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly, Monday 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      force_districts:
+        description: >
+          Comma-separated district IDs to force-convert (e.g. 01CGD,09CGD),
+          or "all" to reconvert every district regardless of timestamp.
+        required: false
+        default: ''
+
+jobs:
+
+  # ── Job 1: Detect which districts changed since last run ─────────────
+  check-updates:
+    name: Check NOAA district timestamps
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      districts_to_run: ${{ steps.check.outputs.districts_to_run }}
+      has_updates: ${{ steps.check.outputs.has_updates }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for NOAA updates
+        id: check
+        env:
+          FORCE_ALL: ${{ github.event.inputs.force_districts == 'all' && 'true' || 'false' }}
+          FORCE_DISTRICTS: ${{ github.event.inputs.force_districts != 'all' && github.event.inputs.force_districts || '' }}
+        run: bash scripts/check-updates.sh
+
+      - name: Report
+        run: |
+          if [ "${{ steps.check.outputs.has_updates }}" = "true" ]; then
+            echo "Districts to convert: ${{ steps.check.outputs.districts_to_run }}"
+          else
+            echo "All districts are up-to-date — nothing to convert."
+          fi
+
+  # ── Job 2: Convert each changed district (parallel matrix) ───────────
+  convert:
+    name: Convert ${{ matrix.district }}
+    needs: check-updates
+    if: needs.check-updates.outputs.has_updates == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: read  # pull from GHCR without rate-limiting
+
+    strategy:
+      fail-fast: false  # a failed district does not cancel others
+      max-parallel: 4
+      matrix:
+        district: ${{ fromJson(needs.check-updates.outputs.districts_to_run) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Log in to GHCR so the toolbox image pull is authenticated (avoids
+      # anonymous pull rate limits on public images).
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # The toolbox image runs as UID 1001.  ubuntu-24.04 runners also use
+      # UID 1001 (the "runner" user), so --user $(id -u):$(id -g) passed
+      # by convert-district.sh lets the container write to bind-mounted
+      # output directories without any chown step.
+      - name: Verify runner UID matches toolbox UID 1001
+        run: |
+          echo "Runner UID=$(id -u) GID=$(id -g)"
+          if [ "$(id -u)" != "1001" ]; then
+            echo "::warning::Runner UID is $(id -u), not 1001. Output dirs will be pre-chmod'd 777."
+            chmod 777 /tmp
+          fi
+
+      - name: Convert ${{ matrix.district }}
+        env:
+          TOOLBOX_IMAGE: ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0
+        run: |
+          chmod +x scripts/convert-district.sh
+          scripts/convert-district.sh "${{ matrix.district }}"
+
+      - name: Upload MBTiles artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mbtiles-${{ matrix.district }}
+          path: /tmp/enc-output/noaa-enc-${{ matrix.district }}.mbtiles
+          retention-days: 1
+
+      - name: Write failure result JSON
+        if: failure()
+        run: |
+          mkdir -p /tmp/enc-output
+          cat > /tmp/enc-output/district-result-${{ matrix.district }}.json <<JSON
+          {
+            "district": "${{ matrix.district }}",
+            "lastModified": null,
+            "lastConverted": null,
+            "success": false
+          }
+          JSON
+
+      - name: Upload result artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: district-result-${{ matrix.district }}
+          path: /tmp/enc-output/district-result-${{ matrix.district }}.json
+          retention-days: 1
+
+  # ── Job 3: Publish release assets and commit updated state.json ───────
+  publish:
+    name: Publish release assets
+    needs: [check-updates, convert]
+    # Run even if some matrix jobs failed, so successful districts are published
+    # and state.json is updated for them. Skip only if convert was cancelled.
+    if: >
+      always() &&
+      needs.check-updates.outputs.has_updates == 'true' &&
+      needs.convert.result != 'cancelled'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write  # push state.json, create/edit release, upload assets
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download MBTiles artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: mbtiles-*
+          path: /tmp/mbtiles
+          merge-multiple: true
+
+      - name: Download result artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: district-result-*
+          path: /tmp/results
+          merge-multiple: true
+
+      # Update state.json: only write lastModified/lastConverted for districts
+      # whose result JSON reports success=true.  Failed districts keep their
+      # old lastModified so the next weekly run retries them.
+      - name: Update state.json
+        run: |
+          for f in /tmp/results/district-result-*.json; do
+            [ -f "$f" ] || continue
+            python3 - "$f" <<'PY'
+          import json, sys
+          result = json.load(open(sys.argv[1]))
+          if not result.get('success'):
+              print(f"  {result.get('district','?')}: failed — state unchanged")
+              sys.exit(0)
+          state = json.load(open('state.json'))
+          d = result['district']
+          state['districts'][d]['lastModified'] = result.get('lastModified')
+          state['districts'][d]['lastConverted'] = result.get('lastConverted')
+          json.dump(state, open('state.json', 'w'), indent=2)
+          open('state.json', 'a').write('\n')
+          print(f"  {d}: updated lastModified={result.get('lastModified')}")
+          PY
+          done
+
+      # Force-move the noaa-latest tag to the current HEAD so the release
+      # always points at the commit that has the updated state.json.
+      - name: Move noaa-latest tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -f noaa-latest
+          git push origin refs/tags/noaa-latest --force
+
+      - name: Create or update noaa-latest release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          NOTES="NOAA ENCs converted to MBTiles by Coast Guard District. Updated weekly.
+
+          | District | Coverage |
+          |---|---|
+          | noaa-enc-01CGD.mbtiles | 1st District — New England |
+          | noaa-enc-05CGD.mbtiles | 5th District — Mid-Atlantic |
+          | noaa-enc-07CGD.mbtiles | 7th District — Southeast |
+          | noaa-enc-08CGD.mbtiles | 8th District — Gulf Coast |
+          | noaa-enc-09CGD.mbtiles | 9th District — Great Lakes |
+          | noaa-enc-11CGD.mbtiles | 11th District — Pacific Southwest |
+          | noaa-enc-13CGD.mbtiles | 13th District — Pacific Northwest |
+          | noaa-enc-14CGD.mbtiles | 14th District — Hawaii / Pacific Islands |
+          | noaa-enc-17CGD.mbtiles | 17th District — Alaska |
+
+          See \`state.json\` in this repo for per-district last-modified timestamps and conversion dates."
+
+          if gh release view noaa-latest &>/dev/null; then
+            gh release edit noaa-latest \
+              --title "NOAA ENC MBTiles ${DATE}" \
+              --notes "$NOTES"
+          else
+            gh release create noaa-latest \
+              --title "NOAA ENC MBTiles ${DATE}" \
+              --notes "$NOTES" \
+              --latest=false
+          fi
+
+      - name: Upload MBTiles to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for f in /tmp/mbtiles/noaa-enc-*.mbtiles; do
+            [ -f "$f" ] || continue
+            echo "Uploading $(basename "$f") ($(du -sh "$f" | cut -f1))"
+            gh release upload noaa-latest "$f" --clobber
+          done
+
+      - name: Generate and upload manifest.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json, os, datetime
+          state = json.load(open('state.json'))
+          repo  = os.environ['REPO']
+          base  = f"https://github.com/{repo}/releases/download/noaa-latest"
+          manifest = {
+            "generated":  datetime.datetime.utcnow().isoformat() + "Z",
+            "releaseUrl": f"https://github.com/{repo}/releases/tag/noaa-latest",
+            "districts": {
+              d: {**v, "downloadUrl": f"{base}/{v['assetName']}"}
+              for d, v in state['districts'].items()
+            },
+          }
+          with open('/tmp/manifest.json', 'w') as fh:
+            json.dump(manifest, fh, indent=2)
+            fh.write('\n')
+          print("manifest.json written")
+          PY
+          gh release upload noaa-latest /tmp/manifest.json --clobber
+
+      - name: Commit updated state.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          if git diff --cached --quiet; then
+            echo "state.json unchanged (all converted districts failed)"
+          else
+            git commit -m "chore: update state.json after ENC conversion [skip ci]"
+            git push
+          fi

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "districts": {
+    "01CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-01CGD.mbtiles" },
+    "05CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-05CGD.mbtiles" },
+    "07CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-07CGD.mbtiles" },
+    "08CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-08CGD.mbtiles" },
+    "09CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-09CGD.mbtiles" },
+    "11CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-11CGD.mbtiles" },
+    "13CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-13CGD.mbtiles" },
+    "14CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-14CGD.mbtiles" },
+    "17CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-17CGD.mbtiles" }
+  }
+}
