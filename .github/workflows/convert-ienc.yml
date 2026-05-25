@@ -1,8 +1,6 @@
 name: Convert European IENC to MBTiles
 
 on:
-  schedule:
-    - cron: '0 8 * * 1'  # Monday 08:00 UTC (offset from NOAA run at 06:00)
   workflow_dispatch:
     inputs:
       force_countries:
@@ -178,15 +176,11 @@ jobs:
 
           | File | Coverage |
           |---|---|
-          | eu-ienc-de.mbtiles | Germany — ELWIS (Rhine, Danube, Elbe, Weser, …) |
           | eu-ienc-at.mbtiles | Austria — Danube (DORIS/Viadonau) |
           | eu-ienc-hr.mbtiles | Croatia — Danube, Sava, Drava |
           | eu-ienc-rs.mbtiles | Serbia — Danube, Sava, Tisa |
-          | eu-ienc-bg.mbtiles | Bulgaria — Danube (BULRIS) |
           | eu-ienc-pl.mbtiles | Poland — Oder system (UZS Szczecin) |
           | eu-ienc-ch.mbtiles | Switzerland — High Rhine |
-          | eu-ienc-ro.mbtiles | Romania — Danube canals (ACN) |
-          | eu-ienc-be.mbtiles | Belgium — Wallonia + Brussels waterways |
 
           Tile zoom range: z9–z18. Format: vector tiles (MVT / pbf).
           See \`state.json\` in this repo for per-country conversion dates."

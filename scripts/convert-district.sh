@@ -73,7 +73,7 @@ fi
 # Parallel branch from signalk-charts-provider-simple buildExportScript()
 # with multiFile=true and parallelism=$(nproc): per-layer ogr2ogr calls within
 # each .000 cell are fanned out via xargs -P so all CPUs are used.
-echo "[2/3] GDAL export: ${ENC_COUNT} cells → GeoJSON..."
+echo "[2/3] GDAL export: ${ENC_COUNT} cells → FlatGeobuf..."
 
 GDAL_SCRIPT=$(mktemp /tmp/gdal-XXXXX.sh)
 cat > "$GDAL_SCRIPT" <<'GDAL'
@@ -92,10 +92,10 @@ find /input -name '*.000' ! -name '._*' -type f -print0 | while IFS= read -r -d 
     case "$layer" in DSID|C_AGGR|C_ASSO|Generic) exit 0 ;; esac
     outname="${layer}_${name}"
     if [ "$layer" = "SOUNDG" ]; then
-      ogr2ogr -f GeoJSON -oo SPLIT_MULTIPOINT=YES -oo ADD_SOUNDG_DEPTH=YES \
-        "/output/${outname}.geojson" "$enc" "$layer" 2>>/output/.export-errors.log || true
+      ogr2ogr -f FlatGeobuf -oo SPLIT_MULTIPOINT=YES -oo ADD_SOUNDG_DEPTH=YES \
+        "/output/${outname}.fgb" "$enc" "$layer" 2>>/output/.export-errors.log || true
     else
-      ogr2ogr -f GeoJSON "/output/${outname}.geojson" "$enc" "$layer" \
+      ogr2ogr -f FlatGeobuf "/output/${outname}.fgb" "$enc" "$layer" \
         2>>/output/.export-errors.log || true
     fi
   ' _ '{}' "$enc" "$name"
@@ -116,10 +116,10 @@ rm -f "$GDAL_SCRIPT"
 
 rm -rf "$ENC_DIR"
 
-GEOJSON_COUNT=$(find "$GEOJSON_DIR" -name "*.geojson" ! -name ".*" -type f | wc -l)
-echo "  Produced ${GEOJSON_COUNT} GeoJSON files"
-if [ "$GEOJSON_COUNT" -eq 0 ]; then
-  echo "ERROR: GDAL export produced no GeoJSON output"
+FGB_COUNT=$(find "$GEOJSON_DIR" -name "*.fgb" ! -name ".*" -type f | wc -l)
+echo "  Produced ${FGB_COUNT} FlatGeobuf files"
+if [ "$FGB_COUNT" -eq 0 ]; then
+  echo "ERROR: GDAL export produced no FlatGeobuf output"
   if [ -f "${GEOJSON_DIR}/.export-errors.log" ]; then
     echo "--- export errors ---"
     tail -20 "${GEOJSON_DIR}/.export-errors.log"
@@ -128,7 +128,7 @@ if [ "$GEOJSON_COUNT" -eq 0 ]; then
 fi
 
 # ── Step 3: Tippecanoe → district MBTiles (inside container) ──────────
-# Build -L LAYER:/input/FILE.geojson args for every GeoJSON file.
+# Build -L LAYER:/input/FILE.fgb args for every FlatGeobuf file.
 # Layer name = filename with trailing _CHARTID stripped when the suffix
 # contains a digit (mirrors the plugin's tailHasDigit logic).
 # Tippecanoe merges features from multiple -L args that share a layer name,
@@ -137,7 +137,7 @@ echo "[3/3] Running tippecanoe (z${MIN_ZOOM}–z${MAX_ZOOM})..."
 
 LAYER_ARGS=""
 while IFS= read -r f; do
-  filename=$(basename "$f" .geojson)
+  filename=$(basename "$f" .fgb)
   suffix="${filename##*_}"
   if echo "$suffix" | grep -qE '[0-9]'; then
     layer="${filename%_*}"
@@ -145,7 +145,7 @@ while IFS= read -r f; do
     layer="$filename"
   fi
   LAYER_ARGS="${LAYER_ARGS} -L ${layer}:/input/$(basename "$f")"
-done < <(find "$GEOJSON_DIR" -name "*.geojson" ! -name ".*" -type f | sort)
+done < <(find "$GEOJSON_DIR" -name "*.fgb" ! -name ".*" -type f | sort)
 
 # Write the tippecanoe invocation to a temp script so shell quoting in the
 # layer args survives the docker run boundary without escaping issues.
@@ -176,17 +176,19 @@ rm -f "$TIPP_SCRIPT"
 mv "${OUTPUT}/district.mbtiles" "$MBTILES_OUT"
 
 # ── Patch MBTiles metadata ────────────────────────────────────────────
-docker run --rm \
-  --user "$(id -u):$(id -g)" \
-  -v "${OUTPUT}:/output:rw" \
-  "$TOOLBOX" \
-  bash -c "
-sqlite3 /output/noaa-enc-${DISTRICT}.mbtiles \"
-  INSERT OR REPLACE INTO metadata VALUES('name','NOAA ENC ${DISTRICT}');
-  INSERT OR REPLACE INTO metadata VALUES('description','NOAA Electronic Navigational Charts - ${DISTRICT}');
-  INSERT OR REPLACE INTO metadata VALUES('type','S-57');
-\"
-"
+# sqlite3 CLI is not in the toolbox image; use the host runner's python3
+# (the .mbtiles file lives on the host filesystem at $MBTILES_OUT).
+python3 - <<PY
+import sqlite3
+conn = sqlite3.connect("${MBTILES_OUT}")
+conn.executemany("INSERT OR REPLACE INTO metadata VALUES(?,?)", [
+    ("name", "NOAA ENC ${DISTRICT}"),
+    ("description", "NOAA Electronic Navigational Charts - ${DISTRICT}"),
+    ("type", "S-57"),
+])
+conn.commit()
+conn.close()
+PY
 
 rm -rf "$WORK"
 

@@ -12,14 +12,10 @@
     "17CGD": { "lastModified": null, "lastConverted": null, "assetName": "noaa-enc-17CGD.mbtiles" }
   },
   "ienc": {
-    "DE": { "urlFingerprint": null, "lastConverted": null, "assetName": "eu-ienc-de.mbtiles" },
     "AT": { "lastModified": null, "lastConverted": null, "assetName": "eu-ienc-at.mbtiles" },
     "HR": { "lastModified": null, "lastConverted": null, "assetName": "eu-ienc-hr.mbtiles" },
     "RS": { "urlFingerprint": null, "lastConverted": null, "assetName": "eu-ienc-rs.mbtiles" },
-    "BG": { "urlFingerprint": null, "lastConverted": null, "assetName": "eu-ienc-bg.mbtiles" },
     "PL": { "urlFingerprint": null, "lastConverted": null, "assetName": "eu-ienc-pl.mbtiles" },
-    "CH": { "urlFingerprint": null, "lastConverted": null, "assetName": "eu-ienc-ch.mbtiles" },
-    "RO": { "lastModified": null, "lastConverted": null, "assetName": "eu-ienc-ro.mbtiles" },
-    "BE": { "lastModified": null, "lastConverted": null, "assetName": "eu-ienc-be.mbtiles" }
+    "CH": { "urlFingerprint": null, "lastConverted": null, "assetName": "eu-ienc-ch.mbtiles" }
   }
 }

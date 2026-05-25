@@ -74,15 +74,16 @@ touch "${TMP_DIR}/to_run"
 # Stable-URL countries
 check_last_modified "AT" "https://www.doris.bmimi.gv.at/fileadmin/content/doris/ECDIS_Download/2W_Edition.zip" &
 check_last_modified "HR" "http://www.vodniputovi.hr/enc/dunav/dunav.zip" &
-check_last_modified "BE" "https://port.brussels/sites/default/files/ENC_ROOT.zip" &
-check_last_modified "RO" "https://acn.ro/uploads/CDMN.zip" &
 
 # Page-scraped countries
-check_url_fingerprint "DE" "https://www.elwis.de/DE/dynamisch/IENC/" "WW[0-9]+" &
 check_url_fingerprint "RS" "http://www.plovput.rs/electronic-navigational-charts" "IENC.*\.zip" &
-check_url_fingerprint "BG" "https://www.bulris.bg/en/river-information-services/electronic-navigation-charts" "\.zip" &
 check_url_fingerprint "PL" "https://www.szczecin.uzs.gov.pl/?page_id=6092" "IENC.*\.zip" &
 check_url_fingerprint "CH" "https://port-of-switzerland.ch/hafenservice/schifffahrtsservice/inland-enc-hochrhein/" "Hochrhein.*\.zip|INLAND.*\.zip" &
+
+# DE: ELWIS requires a browser session — not automatable via curl
+# BG: BULRIS has no public direct download links
+# BE: Brussels/Wallonia URLs broken or not direct downloads
+# RO: ACN download URLs unverified (returned 404)
 
 wait
 

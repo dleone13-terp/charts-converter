@@ -43,16 +43,11 @@ download_zips() {
   case "$COUNTRY" in
 
     DE)
-      BASE="https://www.elwis.de"
-      curl -fsL --max-time 30 "https://www.elwis.de/DE/dynamisch/IENC/" \
-        | grep -oE '/DE/dynamisch/IENC/Download\?file=WW[^"&]+' \
-        | sort -u \
-        | tee "$URLS_FILE" \
-        | while read -r path; do
-            fname=$(echo "$path" | grep -oE 'WW[^&]+' | head -1 | tr '?=' '__')
-            curl -fL --retry 3 --progress-bar -o "${WORK}/zips/${fname}.zip" "${BASE}${path}"
-          done
+      # ELWIS requires a JavaScript browser session — curl downloads return HTML,
+      # not ZIP files. DE is not automatable via simple HTTP. Skip gracefully.
+      echo "Warning: DE (ELWIS) requires a browser session and cannot be downloaded automatically."
       ;;
+
 
     AT)
       URL="https://www.doris.bmimi.gv.at/fileadmin/content/doris/ECDIS_Download/2W_Edition.zip"
@@ -72,24 +67,23 @@ download_zips() {
 
     RS)
       BASE="http://www.plovput.rs"
-      curl -fsL --max-time 30 "http://www.plovput.rs/electronic-navigational-charts" \
+      # plovput.rs can be unreachable from GH Actions runners; || true prevents
+      # a DNS/connection failure from crashing the whole script — ZIP_COUNT check
+      # below will then fail the job gracefully so it's retried next run.
+      (curl -fsL --max-time 30 "http://www.plovput.rs/electronic-navigational-charts" \
         | grep -oE 'href="[^"]*IENC[^"]*\.zip"' \
         | grep -oE '"[^"]*"' | tr -d '"' | sort -u \
         | tee "$URLS_FILE" \
         | while read -r path; do
             url="${BASE}${path}"
             curl -fL --retry 3 --progress-bar -o "${WORK}/zips/$(basename "$path")" "$url"
-          done
+          done) || echo "Warning: RS (plovput.rs) download failed — site may be unreachable"
       ;;
 
     BG)
-      curl -fsL --max-time 30 \
-        "https://www.bulris.bg/en/river-information-services/electronic-navigation-charts" \
-        | grep -oE 'href="[^"]*\.zip"' | grep -oE '"[^"]*"' | tr -d '"' | sort -u \
-        | tee "$URLS_FILE" \
-        | while read -r url; do
-            curl -fL --retry 3 --progress-bar -o "${WORK}/zips/$(basename "$url")" "$url"
-          done
+      # BULRIS page has no parseable direct ZIP links (JS-rendered). No working
+      # public download URL found. BG is not automatable via simple scraping.
+      echo "Warning: BG (BULRIS) has no direct download links on its public page."
       ;;
 
     PL)
@@ -117,24 +111,15 @@ download_zips() {
       ;;
 
     RO)
-      printf '%s\n' \
-        "https://acn.ro/uploads/CDMN.zip" \
-        "https://acn.ro/uploads/PAMN.zip" | tee "$URLS_FILE" \
-        | while read -r url; do
-            curl -fL --retry 3 --progress-bar -o "${WORK}/zips/$(basename "$url")" "$url" || \
-              echo "Warning: failed to download $url (skipping)"
-          done
+      # ACN (acn.ro) URLs could not be confirmed — guessed paths returned 404.
+      # RO requires manual URL verification before it can be automated.
+      echo "Warning: RO (ACN) download URLs are unverified and returned 404."
       ;;
 
     BE)
-      printf '%s\n' \
-        "https://geoportail.wallonie.be/catalogue/3d57a714-7786-4da0-a144-2813fcc8a0b1/distribution/9ce58455-f66c-4756-a827-71b2b6e28bc0" \
-        "https://port.brussels/sites/default/files/ENC_ROOT.zip" | tee "$URLS_FILE" \
-        | while read -r url; do
-            fname="BE_$(basename "$url")"
-            curl -fL --retry 3 --progress-bar -o "${WORK}/zips/${fname}" "$url" || \
-              echo "Warning: failed to download $url (skipping)"
-          done
+      # Brussels ENC_ROOT.zip URL returned 404; Wallonia URL is a catalogue page,
+      # not a direct download. BE requires URL verification before automation.
+      echo "Warning: BE download URLs are broken (404) and require manual verification."
       ;;
 
     *)
@@ -173,7 +158,7 @@ fi
 # Parallel branch from signalk-charts-provider-simple buildExportScript()
 # with multiFile=true and parallelism=$(nproc): per-layer ogr2ogr calls within
 # each .000 cell are fanned out via xargs -P so all CPUs are used.
-echo "[2/3] GDAL export: ${ENC_COUNT} cells → GeoJSON..."
+echo "[2/3] GDAL export: ${ENC_COUNT} cells → FlatGeobuf..."
 
 GDAL_SCRIPT=$(mktemp /tmp/gdal-XXXXX.sh)
 cat > "$GDAL_SCRIPT" <<'GDAL'
@@ -192,10 +177,10 @@ find /input -name '*.000' ! -name '._*' -type f -print0 | while IFS= read -r -d 
     case "$layer" in DSID|C_AGGR|C_ASSO|Generic) exit 0 ;; esac
     outname="${layer}_${name}"
     if [ "$layer" = "SOUNDG" ]; then
-      ogr2ogr -f GeoJSON -oo SPLIT_MULTIPOINT=YES -oo ADD_SOUNDG_DEPTH=YES \
-        "/output/${outname}.geojson" "$enc" "$layer" 2>>/output/.export-errors.log || true
+      ogr2ogr -f FlatGeobuf -oo SPLIT_MULTIPOINT=YES -oo ADD_SOUNDG_DEPTH=YES \
+        "/output/${outname}.fgb" "$enc" "$layer" 2>>/output/.export-errors.log || true
     else
-      ogr2ogr -f GeoJSON "/output/${outname}.geojson" "$enc" "$layer" \
+      ogr2ogr -f FlatGeobuf "/output/${outname}.fgb" "$enc" "$layer" \
         2>>/output/.export-errors.log || true
     fi
   ' _ '{}' "$enc" "$name"
@@ -216,10 +201,10 @@ rm -f "$GDAL_SCRIPT"
 
 rm -rf "$ENC_DIR"
 
-GEOJSON_COUNT=$(find "$GEOJSON_DIR" -name "*.geojson" ! -name ".*" -type f | wc -l)
-echo "  Produced ${GEOJSON_COUNT} GeoJSON files"
-if [ "$GEOJSON_COUNT" -eq 0 ]; then
-  echo "ERROR: GDAL export produced no GeoJSON output"
+FGB_COUNT=$(find "$GEOJSON_DIR" -name "*.fgb" ! -name ".*" -type f | wc -l)
+echo "  Produced ${FGB_COUNT} FlatGeobuf files"
+if [ "$FGB_COUNT" -eq 0 ]; then
+  echo "ERROR: GDAL export produced no FlatGeobuf output"
   if [ -f "${GEOJSON_DIR}/.export-errors.log" ]; then
     echo "--- export errors ---"
     tail -20 "${GEOJSON_DIR}/.export-errors.log"
@@ -228,7 +213,7 @@ if [ "$GEOJSON_COUNT" -eq 0 ]; then
 fi
 
 # ── Step 3: Tippecanoe → country MBTiles (inside container) ───────────
-# Build -L LAYER:/input/FILE.geojson args for every GeoJSON file.
+# Build -L LAYER:/input/FILE.fgb args for every FlatGeobuf file.
 # Layer name = filename with trailing _CHARTID stripped when the suffix
 # contains a digit (mirrors the plugin's tailHasDigit logic).
 # Tippecanoe merges features from multiple -L args that share a layer name,
@@ -237,7 +222,7 @@ echo "[3/3] Running tippecanoe (z${MIN_ZOOM}–z${MAX_ZOOM})..."
 
 LAYER_ARGS=""
 while IFS= read -r f; do
-  filename=$(basename "$f" .geojson)
+  filename=$(basename "$f" .fgb)
   suffix="${filename##*_}"
   if echo "$suffix" | grep -qE '[0-9]'; then
     layer="${filename%_*}"
@@ -245,7 +230,7 @@ while IFS= read -r f; do
     layer="$filename"
   fi
   LAYER_ARGS="${LAYER_ARGS} -L ${layer}:/input/$(basename "$f")"
-done < <(find "$GEOJSON_DIR" -name "*.geojson" ! -name ".*" -type f | sort)
+done < <(find "$GEOJSON_DIR" -name "*.fgb" ! -name ".*" -type f | sort)
 
 TIPP_SCRIPT=$(mktemp /tmp/tipp-XXXXX.sh)
 cat > "$TIPP_SCRIPT" <<TIPP
@@ -274,17 +259,19 @@ rm -f "$TIPP_SCRIPT"
 mv "${OUTPUT}/country.mbtiles" "$MBTILES_OUT"
 
 # ── Patch MBTiles metadata ────────────────────────────────────────────
-docker run --rm \
-  --user "$(id -u):$(id -g)" \
-  -v "${OUTPUT}:/output:rw" \
-  "$TOOLBOX" \
-  bash -c "
-sqlite3 /output/eu-ienc-${COUNTRY}.mbtiles \"
-  INSERT OR REPLACE INTO metadata VALUES('name','IENC ${COUNTRY}');
-  INSERT OR REPLACE INTO metadata VALUES('description','European Inland ENC - ${COUNTRY}');
-  INSERT OR REPLACE INTO metadata VALUES('type','S-57');
-\"
-"
+# sqlite3 CLI is not in the toolbox image; use the host runner's python3
+# (the .mbtiles file lives on the host filesystem at $MBTILES_OUT).
+python3 - <<PY
+import sqlite3
+conn = sqlite3.connect("${MBTILES_OUT}")
+conn.executemany("INSERT OR REPLACE INTO metadata VALUES(?,?)", [
+    ("name", "IENC ${COUNTRY}"),
+    ("description", "European Inland ENC - ${COUNTRY}"),
+    ("type", "S-57"),
+])
+conn.commit()
+conn.close()
+PY
 
 rm -rf "$WORK"
 
