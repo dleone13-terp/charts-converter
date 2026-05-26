@@ -48,51 +48,124 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-      packages: read  # pull from GHCR without rate-limiting
+      packages: read
 
     strategy:
-      fail-fast: false  # a failed country does not cancel others
+      fail-fast: false
       matrix:
         country: ${{ fromJson(needs.check-updates.outputs.countries_to_run) }}
 
     steps:
-      - uses: actions/checkout@v4
-
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verify runner UID matches toolbox UID 1001
+      - name: Download ${{ matrix.country }} IENC sources
         run: |
-          echo "Runner UID=$(id -u) GID=$(id -g)"
-          if [ "$(id -u)" != "1001" ]; then
-            echo "::warning::Runner UID is $(id -u), not 1001. Output dirs will be pre-chmod'd 777."
-            chmod 777 /tmp
+          mkdir -p /tmp/ienc-enc /tmp/enc-output
+          COUNTRY="${{ matrix.country }}"
+
+          case "$COUNTRY" in
+
+            AT)
+              URL="https://www.doris.bmimi.gv.at/fileadmin/content/doris/ECDIS_Download/2W_Edition.zip"
+              LM=$(curl -fsI --max-time 20 --retry 3 "$URL" \
+                | grep -i '^last-modified:' | tr -d '\r' | sed 's/^[Ll]ast-[Mm]odified: //' || true)
+              echo "LAST_MODIFIED=${LM}" >> "$GITHUB_ENV"
+              curl -fL --retry 3 "$URL" -o /tmp/ienc-part.zip
+              unzip -qo /tmp/ienc-part.zip -d /tmp/ienc-enc && rm /tmp/ienc-part.zip
+              ;;
+
+            HR)
+              for url in \
+                "http://www.vodniputovi.hr/enc/dunav/dunav.zip" \
+                "http://www.vodniputovi.hr/enc/sava/sava.zip" \
+                "http://www.vodniputovi.hr/enc/drava/drava.zip"; do
+                curl -fL --retry 3 "$url" -o /tmp/ienc-part.zip
+                unzip -qo /tmp/ienc-part.zip -d /tmp/ienc-enc && rm /tmp/ienc-part.zip
+              done
+              ;;
+
+            RS)
+              URLS=$(curl -fsL --max-time 30 "http://www.plovput.rs/electronic-navigational-charts" \
+                | grep -oE 'href="[^"]*IENC[^"]*\.zip"' | grep -oE '"[^"]*"' | tr -d '"' | sort -u || true)
+              FP=$(echo "$URLS" | sha256sum | cut -c1-16)
+              echo "URL_FINGERPRINT=${FP}" >> "$GITHUB_ENV"
+              echo "$URLS" | while read -r path; do
+                [ -n "$path" ] || continue
+                curl -fL --retry 3 "http://www.plovput.rs${path}" -o /tmp/ienc-part.zip
+                unzip -qo /tmp/ienc-part.zip -d /tmp/ienc-enc && rm /tmp/ienc-part.zip
+              done
+              ;;
+
+            PL)
+              URLS=$(curl -fsL --max-time 30 "https://www.szczecin.uzs.gov.pl/?page_id=6092" \
+                | grep -oE 'href="[^"]*IENC[^"]*\.zip"' | grep -oE '"[^"]*"' | tr -d '"' | sort -u || true)
+              FP=$(echo "$URLS" | sha256sum | cut -c1-16)
+              echo "URL_FINGERPRINT=${FP}" >> "$GITHUB_ENV"
+              echo "$URLS" | while read -r url; do
+                [ -n "$url" ] || continue
+                [[ "$url" =~ ^https?:// ]] || url="https://www.szczecin.uzs.gov.pl${url}"
+                curl -fL --retry 3 "$url" -o /tmp/ienc-part.zip
+                unzip -qo /tmp/ienc-part.zip -d /tmp/ienc-enc && rm /tmp/ienc-part.zip
+              done
+              ;;
+
+            CH)
+              URL=$(curl -fsL --max-time 30 \
+                "https://port-of-switzerland.ch/hafenservice/schifffahrtsservice/inland-enc-hochrhein/" \
+                | grep -oE 'href="[^"]*(Hochrhein|INLAND)[^"]*\.zip"' | grep -oE '"[^"]*"' | tr -d '"' | head -1 || true)
+              [[ "$URL" =~ ^https?:// ]] || URL="https://port-of-switzerland.ch${URL}"
+              FP=$(echo "$URL" | sha256sum | cut -c1-16)
+              echo "URL_FINGERPRINT=${FP}" >> "$GITHUB_ENV"
+              curl -fL --retry 3 "$URL" -o /tmp/ienc-part.zip
+              unzip -qo /tmp/ienc-part.zip -d /tmp/ienc-enc && rm /tmp/ienc-part.zip
+              ;;
+
+          esac
+
+          ENC_COUNT=$(find /tmp/ienc-enc -name "*.000" ! -name "._*" -type f | wc -l)
+          echo "Found ${ENC_COUNT} ENC cells"
+          if [ "$ENC_COUNT" -eq 0 ]; then
+            echo "ERROR: no .000 files found after extraction"
+            exit 1
           fi
 
-      - name: Convert ${{ matrix.country }}
-        env:
-          TOOLBOX_IMAGE: ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0
+      - name: Convert with enc-converter
         run: |
-          chmod +x scripts/convert-country-ienc.sh
-          scripts/convert-country-ienc.sh "${{ matrix.country }}"
+          COUNTRY_LOWER=$(echo "${{ matrix.country }}" | tr '[:upper:]' '[:lower:]')
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v /tmp/ienc-enc:/data/enc:ro \
+            -v /tmp/enc-output:/data/output \
+            ghcr.io/${{ github.repository_owner }}/enc-converter:latest \
+            /data/enc /data/output "eu-ienc-${COUNTRY_LOWER}"
+
+      - name: Write result JSON
+        if: always()
+        run: |
+          COUNTRY="${{ matrix.country }}"
+          COUNTRY_LOWER=$(echo "$COUNTRY" | tr '[:upper:]' '[:lower:]')
+          OUT="/tmp/enc-output/eu-ienc-${COUNTRY_LOWER}.mbtiles"
+          RESULT="/tmp/enc-output/ienc-result-${COUNTRY}.json"
+          mkdir -p /tmp/enc-output
+          if [ -f "$OUT" ]; then
+            SIZE=$(stat -c%s "$OUT")
+            printf '{"country":"%s","urlFingerprint":"%s","lastModified":"%s","lastConverted":"%s","success":true,"sizeBytes":%s}\n' \
+              "$COUNTRY" "${URL_FINGERPRINT:-}" "${LAST_MODIFIED:-}" \
+              "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$SIZE" > "$RESULT"
+          else
+            printf '{"country":"%s","success":false}\n' "$COUNTRY" > "$RESULT"
+          fi
 
       - name: Upload MBTiles artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ienc-mbtiles-${{ matrix.country }}
-          path: /tmp/enc-output/eu-ienc-${{ matrix.country }}.mbtiles
+          path: /tmp/enc-output/eu-ienc-*.mbtiles
           retention-days: 1
-
-      - name: Write failure result JSON
-        if: failure()
-        run: |
-          mkdir -p /tmp/enc-output
-          printf '{"country":"%s","success":false}\n' "${{ matrix.country }}" \
-            > /tmp/enc-output/ienc-result-${{ matrix.country }}.json
 
       - name: Upload result artifact
         if: always()
@@ -106,8 +179,6 @@ jobs:
   publish:
     name: Publish release assets
     needs: [check-updates, convert]
-    # Run even if some matrix jobs failed so successful countries are published.
-    # Skip only if convert was cancelled.
     if: >
       always() &&
       needs.check-updates.outputs.has_updates == 'true' &&
@@ -135,8 +206,6 @@ jobs:
           path: /tmp/results
           merge-multiple: true
 
-      # Update state.json: only write urlFingerprint/lastModified/lastConverted
-      # for countries whose result JSON reports success=true.
       - name: Update state.json
         run: |
           for f in /tmp/results/ienc-result-*.json; do

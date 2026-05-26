@@ -48,42 +48,52 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-      packages: read  # pull from GHCR without rate-limiting
+      packages: read
 
     strategy:
-      fail-fast: false  # a failed district does not cancel others
+      fail-fast: false
       matrix:
         district: ${{ fromJson(needs.check-updates.outputs.districts_to_run) }}
 
     steps:
-      - uses: actions/checkout@v4
-
-      # Log in to GHCR so the toolbox image pull is authenticated (avoids
-      # anonymous pull rate limits on public images).
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # The toolbox image runs as UID 1001.  ubuntu-24.04 runners also use
-      # UID 1001 (the "runner" user), so --user $(id -u):$(id -g) passed
-      # by convert-district.sh lets the container write to bind-mounted
-      # output directories without any chown step.
-      - name: Verify runner UID matches toolbox UID 1001
+      - name: Download ${{ matrix.district }} ZIP
         run: |
-          echo "Runner UID=$(id -u) GID=$(id -g)"
-          if [ "$(id -u)" != "1001" ]; then
-            echo "::warning::Runner UID is $(id -u), not 1001. Output dirs will be pre-chmod'd 777."
-            chmod 777 /tmp
-          fi
+          URL="https://charts.noaa.gov/ENCs/${{ matrix.district }}_ENCs.zip"
+          LM=$(curl -fsI --max-time 20 --retry 3 "$URL" \
+            | grep -i '^last-modified:' | tr -d '\r' | sed 's/^[Ll]ast-[Mm]odified: //' || true)
+          echo "LAST_MODIFIED=${LM}" >> "$GITHUB_ENV"
+          mkdir -p /tmp/enc-output
+          curl -fL --retry 3 --progress-bar "$URL" -o /tmp/district.zip
 
-      - name: Convert ${{ matrix.district }}
-        env:
-          TOOLBOX_IMAGE: ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0
+      - name: Convert with enc-converter
         run: |
-          chmod +x scripts/convert-district.sh
-          scripts/convert-district.sh "${{ matrix.district }}"
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v /tmp/district.zip:/data/input.zip:ro \
+            -v /tmp/enc-output:/data/output \
+            ghcr.io/${{ github.repository_owner }}/enc-converter:latest \
+            /data/input.zip /data/output "noaa-enc-${{ matrix.district }}"
+
+      - name: Write result JSON
+        if: always()
+        run: |
+          OUT="/tmp/enc-output/noaa-enc-${{ matrix.district }}.mbtiles"
+          RESULT="/tmp/enc-output/district-result-${{ matrix.district }}.json"
+          mkdir -p /tmp/enc-output
+          if [ -f "$OUT" ]; then
+            SIZE=$(stat -c%s "$OUT")
+            printf '{"district":"%s","lastModified":"%s","lastConverted":"%s","success":true,"sizeBytes":%s}\n' \
+              "${{ matrix.district }}" "${LAST_MODIFIED:-}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$SIZE" \
+              > "$RESULT"
+          else
+            printf '{"district":"%s","lastModified":null,"lastConverted":null,"success":false}\n' \
+              "${{ matrix.district }}" > "$RESULT"
+          fi
 
       - name: Upload MBTiles artifact
         if: success()
@@ -92,19 +102,6 @@ jobs:
           name: mbtiles-${{ matrix.district }}
           path: /tmp/enc-output/noaa-enc-${{ matrix.district }}.mbtiles
           retention-days: 1
-
-      - name: Write failure result JSON
-        if: failure()
-        run: |
-          mkdir -p /tmp/enc-output
-          cat > /tmp/enc-output/district-result-${{ matrix.district }}.json <<JSON
-          {
-            "district": "${{ matrix.district }}",
-            "lastModified": null,
-            "lastConverted": null,
-            "success": false
-          }
-          JSON
 
       - name: Upload result artifact
         if: always()
@@ -118,15 +115,13 @@ jobs:
   publish:
     name: Publish release assets
     needs: [check-updates, convert]
-    # Run even if some matrix jobs failed, so successful districts are published
-    # and state.json is updated for them. Skip only if convert was cancelled.
     if: >
       always() &&
       needs.check-updates.outputs.has_updates == 'true' &&
       needs.convert.result != 'cancelled'
     runs-on: ubuntu-24.04
     permissions:
-      contents: write  # push state.json, create/edit release, upload assets
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -147,9 +142,6 @@ jobs:
           path: /tmp/results
           merge-multiple: true
 
-      # Update state.json: only write lastModified/lastConverted for districts
-      # whose result JSON reports success=true.  Failed districts keep their
-      # old lastModified so the next weekly run retries them.
       - name: Update state.json
         run: |
           for f in /tmp/results/district-result-*.json; do
@@ -170,8 +162,6 @@ jobs:
           PY
           done
 
-      # Force-move the noaa-latest tag to the current HEAD so the release
-      # always points at the commit that has the updated state.json.
       - name: Move noaa-latest tag
         run: |
           git config user.name "github-actions[bot]"

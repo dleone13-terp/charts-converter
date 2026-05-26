@@ -1,0 +1,34 @@
+name: Build and publish enc-converter image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/convert-enc/convert.py
+      - scripts/convert-enc/Dockerfile
+  workflow_dispatch:
+
+jobs:
+  build-push:
+    name: Build and push to GHCR
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: scripts/convert-enc
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/enc-converter:latest
+            ghcr.io/${{ github.repository_owner }}/enc-converter:${{ github.sha }}
