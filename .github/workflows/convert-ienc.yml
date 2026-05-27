@@ -95,7 +95,8 @@ jobs:
               echo "URL_FINGERPRINT=${FP}" >> "$GITHUB_ENV"
               echo "$URLS" | while read -r path; do
                 [ -n "$path" ] || continue
-                curl -fL --retry 3 "http://www.plovput.rs${path}" -o /tmp/ienc-part.zip
+                [[ "$path" =~ ^https?:// ]] || path="http://www.plovput.rs${path}"
+                curl -fL --retry 3 "$path" -o /tmp/ienc-part.zip
                 unzip -qo /tmp/ienc-part.zip -d /tmp/ienc-enc && rm /tmp/ienc-part.zip
               done
               ;;

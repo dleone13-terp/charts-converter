@@ -245,5 +245,6 @@ jobs:
             echo "state.json unchanged (all converted districts failed)"
           else
             git commit -m "chore: update state.json after ENC conversion [skip ci]"
+            git pull --rebase origin main
             git push
           fi
