@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENC Chart Viewer</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; font-family: system-ui, sans-serif; background: #111; }
+
+    #app {
+      display: grid;
+      height: 100vh;
+      grid-template-rows: 44px 1fr;
+      grid-template-columns: 240px 1fr;
+      grid-template-areas: "header header" "sidebar map";
+    }
+
+    header {
+      grid-area: header;
+      background: #1a2332;
+      color: #e0eaf5;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 2px solid #2d4a6e;
+    }
+    header h1 { font-size: 15px; font-weight: 600; }
+
+    #sidebar {
+      grid-area: sidebar;
+      background: #1e2d3e;
+      color: #c8d8e8;
+      padding: 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      border-right: 1px solid #2d4a6e;
+    }
+
+    .section {
+      background: #243447;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .section h3 {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7fa8c8;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-bottom: 8px;
+      color: #a8c0d8;
+      font-size: 12px;
+    }
+    label:last-child { margin-bottom: 0; }
+
+    input[type="text"], input[type="url"], select {
+      background: #1a2332;
+      border: 1px solid #2d4a6e;
+      border-radius: 4px;
+      color: #e0eaf5;
+      padding: 5px 8px;
+      font-size: 12px;
+      width: 100%;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4px;
+    }
+    .theme-btn {
+      background: #1a2332;
+      color: #a8c0d8;
+      border: 1px solid #2d4a6e;
+      border-radius: 4px;
+      padding: 5px 4px;
+      font-size: 11px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .theme-btn:hover { background: #243447; }
+    .theme-btn.active { background: #2d6ab4; color: #fff; border-color: #2d6ab4; }
+
+    #feature-info {
+      font-size: 11px;
+      line-height: 1.6;
+      color: #a8c0d8;
+      max-height: 200px;
+      overflow-y: auto;
+      word-break: break-all;
+    }
+    #feature-info b { color: #e0eaf5; }
+    #feature-info .empty { color: #4a6a8a; font-style: italic; }
+
+    #status {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: #2d4a6e;
+      color: #7fa8c8;
+      margin-left: auto;
+    }
+    #status.ok { background: #1a4a1a; color: #52e83b; }
+    #status.err { background: #4a1a1a; color: #ea5471; }
+
+    #map { grid-area: map; }
+    .maplibregl-map { height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>⚓ ENC Chart Viewer</h1>
+      <span id="status">connecting…</span>
+    </header>
+
+    <div id="sidebar">
+
+      <div class="section">
+        <h3>Tile Server</h3>
+        <label>
+          URL
+          <input type="url" id="server-url" value="http://localhost:8080" />
+        </label>
+        <label>
+          Dataset
+          <input type="text" id="data-name" value="de-encs-styled" />
+        </label>
+      </div>
+
+      <div class="section">
+        <h3>Theme</h3>
+        <div class="theme-grid">
+          <button class="theme-btn active" data-theme="day">Day</button>
+          <button class="theme-btn" data-theme="dusk">Dusk</button>
+          <button class="theme-btn" data-theme="night">Night</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Depth Unit</h3>
+        <div class="theme-grid">
+          <button class="theme-btn active" data-unit="meters">Meters</button>
+          <button class="theme-btn" data-unit="fathoms">Fathoms</button>
+          <button class="theme-btn" data-unit="feet">Feet</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Feature Info</h3>
+        <div id="feature-info"><span class="empty">Click a feature on the map</span></div>
+      </div>
+
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

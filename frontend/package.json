@@ -1,0 +1,20 @@
+{
+  "name": "enc-chart-viewer",
+  "version": "1.0.0",
+  "description": "OpenLayers viewer for S-57 ENC vector tiles with WASM styling",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "wasm": "wasm-pack build --target bundler ../../openenc-styling-rust/crates/s57style-wasm --out-dir src/wasm-pkg"
+  },
+  "dependencies": {
+    "ol": "^10.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vite-plugin-wasm": "^3.3.0",
+    "vite-plugin-top-level-await": "^1.4.0"
+  }
+}

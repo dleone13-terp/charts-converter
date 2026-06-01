@@ -11,28 +11,40 @@ Pipeline:
   tile-join → MBTiles
 
 Usage (inside container):
-    python3 convert.py <zip-or-dir> [output-dir] [output-name]
+    python3 convert.py <zip-or-dir> [output-dir] [output-name] [options]
 
     The first argument may be a ZIP archive or a directory of already-extracted
     ENC files.  The directory form is used for IENC sources where multiple ZIPs
     are downloaded and extracted into one folder before the container runs.
 
+Styling options (require s57style Python module — build with maturin):
+    --style                 Stamp S-57 conditional style properties (SY/AC/LC/AP/LP/EA)
+                            onto each GeoJSON feature before tiling.  Without this flag
+                            no styling is applied and the tile client must style at render
+                            time.
+    --shallow <m>           Shallow depth threshold in metres (default: 3.0)
+    --safety  <m>           Safety depth threshold in metres (default: 6.0)
+    --deep    <m>           Deep depth threshold in metres (default: 9.0)
+    --theme   Day|Dusk|Night  S-52 colour theme written into style properties (default: Day)
+    --depth-unit Meters|Fathoms|Feet  (default: Meters)
+
 Usage (via Docker — single ZIP):
     docker run --rm --user "$(id -u):$(id -g)" \\
       -v /path/to/input.zip:/data/input.zip:ro \\
       -v /path/to/output:/data/output \\
-      enc-converter /data/input.zip /data/output [name]
+      enc-converter /data/input.zip /data/output [name] [--style ...]
 
 Usage (via Docker — pre-extracted directory):
     docker run --rm --user "$(id -u):$(id -g)" \\
       -v /path/to/enc-dir:/data/enc:ro \\
       -v /path/to/output:/data/output \\
-      enc-converter /data/enc /data/output [name]
+      enc-converter /data/enc /data/output [name] [--style ...]
 
     --user is required so the container writes output files as the host user.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import os
@@ -48,6 +60,69 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Optional
 
 EXPORT_ERROR_FILE_BASENAME = '.export-errors.log'
+
+# ── Optional s57style integration ─────────────────────────────────────────────
+
+def _make_styler(opts: dict):
+    """
+    Build a StyleEngine from *opts* if --style was requested, else return None.
+
+    opts keys (all optional):
+      style (bool)         – master switch; must be True to enable styling
+      shallow_depth (float)
+      safety_depth  (float)
+      deep_depth    (float)
+      theme         (str)   – 'Day' | 'Dusk' | 'Night'
+      depth_unit    (str)   – 'Meters' | 'Fathoms' | 'Feet'
+    """
+    if not opts.get('style', False):
+        return None
+    try:
+        import s57style as _mod
+    except ImportError:
+        print(
+            'WARNING: --style requested but the s57style module is not installed.\n'
+            '  Build it with:  cd <openenc-styling-rust>/crates/s57style-python && maturin develop\n'
+            '  Styling will be skipped for this run.',
+            file=sys.stderr,
+        )
+        return None
+    styler = _mod.StyleEngine(
+        shallow_depth=opts.get('shallow_depth', 3.0),
+        safety_depth=opts.get('safety_depth', 6.0),
+        deep_depth=opts.get('deep_depth', 9.0),
+        theme=opts.get('theme', 'Day'),
+        depth_unit=opts.get('depth_unit', 'Meters'),
+    )
+    print(
+        f"s57style: styling enabled — theme={opts.get('theme','Day')}, "
+        f"shallow={opts.get('shallow_depth',3.0)}m, "
+        f"safety={opts.get('safety_depth',6.0)}m, "
+        f"deep={opts.get('deep_depth',9.0)}m"
+    )
+    return styler
+
+
+def _apply_s57_style(props: dict, layer: str, styler) -> dict:
+    """Enrich feature properties with S-57 conditional style keys (SY/AC/LC/AP/LP/EA)."""
+    if styler is None:
+        return props
+    try:
+        result = json.loads(styler.style_feature(layer, json.dumps(props)))
+        updates: dict = {}
+        _KEY_MAP = {'symbol': 'SY', 'area_color': 'AC', 'line_color': 'LC',
+                    'area_pattern': 'AP', 'line_pattern': 'LP'}
+        for rust_key, s57_key in _KEY_MAP.items():
+            val = result.get(rust_key)
+            if val is not None:
+                updates[s57_key] = val
+        if result.get('exclude_area_point_symbol'):
+            updates['EA'] = True
+        for k, v in (result.get('extra') or {}).items():
+            updates[k] = v
+        return {**props, **updates}
+    except Exception:
+        return props
 
 # RFC 8142 record separator — triggers tippecanoe parallel reads automatically
 _RS = '\x1e'
@@ -265,7 +340,7 @@ def _with_tippecanoe_minzoom(feature: dict, minzoom: int) -> dict:
     existing = feature.get('tippecanoe') if isinstance(feature.get('tippecanoe'), dict) else {}
     return {**feature, 'tippecanoe': {**existing, 'minzoom': minzoom}}
 
-def _consolidate(geojsons_dir: str, user_minzoom: int) -> list[dict]:
+def _consolidate(geojsons_dir: str, user_minzoom: int, styler=None) -> list[dict]:
     """
     Stream-merge per-chart-per-layer .geojsons files into one RS-prefixed
     GeoJSONSeq per layer. Reads line-by-line — never loads a whole file.
@@ -297,7 +372,18 @@ def _consolidate(geojsons_dir: str, user_minzoom: int) -> list[dict]:
                     feat = _flatten_list_properties(feat)
                     if props := feat.get('properties'):
                         feat = {**feat, 'properties': {k: v for k, v in props.items() if k not in _SKIP_PROPERTIES}}
-                    scamin_floor = scamin_to_minzoom((feat.get('properties') or {}).get('SCAMIN'))
+
+                    # Stamp every feature with its S-57 layer name so tile clients
+                    # can look it up without inspecting the tile layer header.
+                    curr_props: dict = dict(feat.get('properties') or {})
+                    curr_props['layer'] = layer
+
+                    # Apply conditional S-57 styling (SY/AC/LC/AP/LP/EA) when --style is set.
+                    curr_props = _apply_s57_style(curr_props, layer, styler)
+
+                    feat = {**feat, 'properties': curr_props}
+
+                    scamin_floor = scamin_to_minzoom(curr_props.get('SCAMIN'))
                     floors = [x for x in (band_floor, scamin_floor) if x is not None]
                     if floors:
                         feat = _with_tippecanoe_minzoom(feat, max(user_minzoom, *floors))
@@ -340,9 +426,9 @@ def _export_layers(enc_dir: str, enc_files: list[str], out_dir: str) -> None:
 
 def _run_tippecanoe(
     geojsons_dir: str, output_mbtiles: str,
-    minzoom: int, maxzoom: int, threads: int | None = None,
+    minzoom: int, maxzoom: int, threads: int | None = None, styler=None,
 ) -> None:
-    layers = _consolidate(geojsons_dir, minzoom)
+    layers = _consolidate(geojsons_dir, minzoom, styler)
     if not layers:
         raise RuntimeError('No GeoJSONSeq layers to tile')
 
@@ -371,6 +457,11 @@ def _run_tippecanoe(
             '--no-simplification-of-shared-nodes',
             '--no-line-simplification',
             '--no-tiny-polygon-reduction',
+            # Merge adjacent same-attribute polygons and share borders between
+            # touching polygons — keeps lower-band tiles compact when they are
+            # extended to higher zoom levels to fill inter-band seam gaps.
+            '--coalesce',
+            '--detect-shared-borders',
             '--buffer=80', '--force',
             *layer_args,
         ],
@@ -406,6 +497,7 @@ def _run_band(
     user_min: int,
     user_max: int,
     threads: int,
+    styler=None,
 ) -> str | None:
     """Full export → consolidate → tippecanoe for one band bucket."""
     if band is not None:
@@ -415,7 +507,7 @@ def _run_band(
             print(f'{label} skipped (z{user_max} below band floor z{b_min})')
             return None
         note = []
-        if b_min > user_min: note.append(f'raised to z{b_min}')
+        if b_min > user_min: note.append(f'min raised to z{b_min}')
         if b_max < user_max: note.append(f'clamped to z{b_max}')
         suffix = f' ({", ".join(note)})' if note else ''
         print(f'{label} z{b_min}-z{b_max}{suffix}, {len(cells)} cell(s)')
@@ -443,12 +535,12 @@ def _run_band(
 
     mbtiles = os.path.join(tmp_dir, f'band-{slug}.mbtiles')
     print(f'{label} Tippecanoe z{b_min}-z{b_max} ({threads} threads)')
-    _run_tippecanoe(band_out, mbtiles, b_min, b_max, threads)
+    _run_tippecanoe(band_out, mbtiles, b_min, b_max, threads, styler)
     return mbtiles
 
 def _per_band_pipeline(
     enc_dir: str, enc_files: list[str],
-    tmp_dir: str, options: dict, output: str,
+    tmp_dir: str, options: dict, output: str, styler=None,
 ) -> None:
     grouping = group_cells_by_band(enc_files)
     user_min = options.get('minzoom', 9)
@@ -472,13 +564,13 @@ def _per_band_pipeline(
             label = f'[band {band} {i}/{total}]'
             futs[pool.submit(
                 _run_band, band, grouping['by_band'].get(band, []),
-                label, enc_dir, tmp_dir, user_min, user_max, threads,
+                label, enc_dir, tmp_dir, user_min, user_max, threads, styler,
             )] = label
         if unbanded:
             label = f'[unbanded {len(grouping["bands"]) + 1}/{total}]'
             futs[pool.submit(
                 _run_band, None, unbanded,
-                label, enc_dir, tmp_dir, user_min, user_max, threads,
+                label, enc_dir, tmp_dir, user_min, user_max, threads, styler,
             )] = label
 
         intermediates = []
@@ -494,16 +586,27 @@ def _per_band_pipeline(
 
 # ── MBTiles metadata ──────────────────────────────────────────────────────────
 
-def patch_mbtiles(path: str, name: str) -> None:
+def patch_mbtiles(path: str, name: str, tile_url: str | None = None, styler=None) -> None:
     try:
         conn = sqlite3.connect(path)
         try:
-            # tippecanoe omits UNIQUE on metadata(name); add it so INSERT OR REPLACE works.
             conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS _metadata_name ON metadata(name)")
+            rows = [('type', 'S-57'), ('name', f'S-57 {name}')]
+
+            # When styling is enabled, embed a Mapbox GL style JSON in metadata
+            # so martin/tileserver-gl can serve it at /style.json.
+            if styler is not None:
+                effective_url = tile_url or 'REPLACE_WITH_TILE_SERVER_URL/{z}/{x}/{y}'
+                sprite_url = tile_url.rstrip('/') + '/sprites/sprite' if tile_url else None
+                glyphs_url = (tile_url.rstrip('/') + '/fonts/{fontstack}/{range}.pbf'
+                              if tile_url else None)
+                style_json = styler.mapbox_style_json(effective_url, sprite_url, glyphs_url)
+                rows.append(('style', style_json))
+                print(f'MBTiles: embedded Mapbox GL style JSON ({len(style_json)} bytes)')
+
             with conn:
                 conn.executemany(
-                    "INSERT OR REPLACE INTO metadata(name, value) VALUES (?, ?)",
-                    [('type', 'S-57'), ('name', f'S-57 {name}')],
+                    "INSERT OR REPLACE INTO metadata(name, value) VALUES (?, ?)", rows
                 )
         finally:
             conn.close()
@@ -515,6 +618,8 @@ def patch_mbtiles(path: str, name: str) -> None:
 
 def process(input_path: str, output: str, options: dict | None = None) -> None:
     options = options or {}
+    styler = _make_styler(options)
+
     tmp = tempfile.mkdtemp(prefix='s57_')
     try:
         geojsons_dir = os.path.join(tmp, 'geojsons')
@@ -546,19 +651,19 @@ def process(input_path: str, output: str, options: dict | None = None) -> None:
             bands_str = ', '.join(str(b) for b in grouping['bands']) or '(none)'
             unbanded_str = f' + {len(grouping["unbanded"])} unbanded' if grouping['unbanded'] else ''
             print(f'Per-band pipeline: {bucket_count} buckets [bands {bands_str}{unbanded_str}]')
-            _per_band_pipeline(enc_dir, enc_files, tmp, options, output)
+            _per_band_pipeline(enc_dir, enc_files, tmp, options, output, styler)
         else:
             print(f'Single-pass: {len(enc_files)} ENC file(s)')
             if clamp['highest_band'] and clamp['effective'] < user_max:
                 print(f"Maxzoom clamped to z{clamp['effective']} (band {clamp['highest_band']})")
             _export_layers(enc_dir, enc_files, geojsons_dir)
             ncpus = os.cpu_count() or 1
-            _run_tippecanoe(geojsons_dir, output, options.get('minzoom', 9), clamp['effective'], ncpus)
+            _run_tippecanoe(geojsons_dir, output, options.get('minzoom', 9), clamp['effective'], ncpus, styler)
 
         if not os.path.exists(output):
             raise RuntimeError('tippecanoe finished but output not found')
 
-        patch_mbtiles(output, os.path.basename(output).removesuffix('.mbtiles'))
+        patch_mbtiles(output, os.path.basename(output).removesuffix('.mbtiles'), styler=styler)
         size_mb = os.path.getsize(output) / (1024 * 1024)
         print(f'Done: {output} ({size_mb:.1f} MB)')
 
@@ -568,28 +673,65 @@ def process(input_path: str, output: str, options: dict | None = None) -> None:
 # ── CLI ───────────────────────────────────────────────────────────────────────
 
 def main() -> None:
-    args = sys.argv[1:]
-    if not args:
-        print('Usage: python3 convert.py <zip-or-dir> [output-dir] [output-name]', file=sys.stderr)
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        prog='convert.py',
+        description='S-57 ENC → MBTiles converter.',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument('input', help='ZIP archive or directory of ENC (.000) files')
+    parser.add_argument('output_dir', nargs='?', default=None,
+                        help='Output directory (default: ./output)')
+    parser.add_argument('output_name', nargs='?', default=None,
+                        help='Output MBTiles base name (default: derived from input)')
 
-    input_path = os.path.realpath(args[0])
+    style_grp = parser.add_argument_group(
+        'styling',
+        'Stamp S-57 conditional style properties onto features before tiling.\n'
+        'Requires the s57style Python module (build with maturin).',
+    )
+    style_grp.add_argument(
+        '--style', action='store_true', default=False,
+        help='Enable pre-baked styling (SY/AC/LC/AP/LP/EA on each feature)',
+    )
+    style_grp.add_argument('--shallow', type=float, default=3.0, metavar='M',
+                           help='Shallow depth threshold in metres (default: 3.0)')
+    style_grp.add_argument('--safety', type=float, default=6.0, metavar='M',
+                           help='Safety depth threshold in metres (default: 6.0)')
+    style_grp.add_argument('--deep', type=float, default=9.0, metavar='M',
+                           help='Deep depth threshold in metres (default: 9.0)')
+    style_grp.add_argument('--theme', default='Day', choices=['Day', 'Dusk', 'Night'],
+                           help='S-52 colour theme (default: Day)')
+    style_grp.add_argument('--depth-unit', default='Meters',
+                           choices=['Meters', 'Fathoms', 'Feet'],
+                           help='Depth unit (default: Meters)')
+
+    ns = parser.parse_args()
+
+    input_path = os.path.realpath(ns.input)
     if not os.path.exists(input_path):
-        print(f'ERROR: input not found: {input_path}', file=sys.stderr)
-        sys.exit(1)
+        parser.error(f'input not found: {input_path}')
 
-    output_dir = os.path.realpath(args[1]) if len(args) > 1 else os.path.join(os.getcwd(), 'output')
+    output_dir = os.path.realpath(ns.output_dir) if ns.output_dir else os.path.join(os.getcwd(), 'output')
     base = os.path.basename(input_path.rstrip('/'))
     default_name = re.sub(r'-+', '-', re.sub(r'[\s()]', '-', os.path.splitext(base)[0]))
-    output_name = args[2] if len(args) > 2 else default_name
+    output_name = ns.output_name or default_name
     output = os.path.join(output_dir, f'{output_name}.mbtiles')
 
     print('=== S-57 ENC Converter ===')
     print(f'Input:  {input_path}')
     print(f'Output: {output}')
 
+    options = {
+        'style': ns.style,
+        'shallow_depth': ns.shallow,
+        'safety_depth': ns.safety,
+        'deep_depth': ns.deep,
+        'theme': ns.theme,
+        'depth_unit': ns.depth_unit,
+    }
+
     start = time.monotonic()
-    process(input_path, output)
+    process(input_path, output, options)
     elapsed = time.monotonic() - start
     print(f'Wall time: {elapsed:.1f}s ({elapsed / 60:.1f}m)')
 

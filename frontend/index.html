@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENC Chart Viewer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; font-family: system-ui, sans-serif; }
+
+    #app {
+      display: grid;
+      height: 100vh;
+      grid-template-rows: auto 1fr;
+      grid-template-columns: 280px 1fr;
+      grid-template-areas: "header header" "sidebar map";
+    }
+
+    header {
+      grid-area: header;
+      background: #1a2332;
+      color: #e0eaf5;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 14px;
+      border-bottom: 2px solid #2d4a6e;
+    }
+    header h1 { font-size: 16px; font-weight: 600; flex: 1; }
+
+    #sidebar {
+      grid-area: sidebar;
+      background: #1e2d3e;
+      color: #c8d8e8;
+      padding: 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+      border-right: 1px solid #2d4a6e;
+    }
+
+    .section {
+      background: #243447;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .section h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7fa8c8;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-bottom: 8px;
+      color: #a8c0d8;
+      font-size: 12px;
+    }
+    label:last-child { margin-bottom: 0; }
+
+    input[type="text"], input[type="url"], select {
+      background: #1a2332;
+      border: 1px solid #2d4a6e;
+      border-radius: 4px;
+      color: #e0eaf5;
+      padding: 5px 8px;
+      font-size: 12px;
+      width: 100%;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #4a90d9;
+      cursor: pointer;
+    }
+    .slider-val {
+      width: 42px;
+      text-align: right;
+      color: #7fa8c8;
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+    }
+
+    button {
+      background: #2d6ab4;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover { background: #3a7fc8; }
+    button.secondary { background: #2d4a6e; }
+    button.secondary:hover { background: #3a5c80; }
+
+    #perf-box {
+      font-variant-numeric: tabular-nums;
+    }
+    .perf-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 0;
+      border-bottom: 1px solid #1a2332;
+    }
+    .perf-row:last-child { border-bottom: none; }
+    .perf-key { color: #7fa8c8; }
+    .perf-val { color: #e0eaf5; font-weight: 500; }
+    .perf-val.fast { color: #52e83b; }
+    .perf-val.slow { color: #ea5471; }
+
+    #wasm-status {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      background: #2d4a6e;
+    }
+    #wasm-status.ok { background: #1a4a1a; color: #52e83b; }
+    #wasm-status.err { background: #4a1a1a; color: #ea5471; }
+    #wasm-status.loading { background: #2d4a6e; color: #7fa8c8; }
+
+    #map {
+      grid-area: map;
+    }
+    .ol-viewport { height: 100% !important; }
+
+    .mode-btn {
+      flex: 1;
+      font-size: 11px;
+      padding: 5px;
+    }
+    .mode-btn.active { background: #1a5ca0; }
+    .mode-row { display: flex; gap: 4px; }
+
+    #feature-info {
+      font-size: 11px;
+      line-height: 1.6;
+      color: #a8c0d8;
+      max-height: 140px;
+      overflow-y: auto;
+      word-break: break-all;
+    }
+    #feature-info b { color: #e0eaf5; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>⚓ ENC Chart Viewer</h1>
+      <span id="wasm-status" class="loading">WASM loading…</span>
+    </header>
+
+    <div id="sidebar">
+
+      <div class="section">
+        <h3>Tile Source</h3>
+        <label>
+          Server URL (martin / tileserver-gl)
+          <input type="url" id="tile-url"
+            placeholder="http://localhost:3000"
+            value="http://localhost:3000" />
+        </label>
+        <label>
+          Layer name
+          <input type="text" id="layer-id" value="public.enc" placeholder="public.enc or layer name" />
+        </label>
+        <button id="connect-btn">Connect</button>
+      </div>
+
+      <div class="section">
+        <h3>Display</h3>
+        <label>
+          Theme
+          <select id="theme">
+            <option value="Day" selected>Day</option>
+            <option value="Dusk">Dusk</option>
+            <option value="Night">Night</option>
+          </select>
+        </label>
+        <label>
+          Depth unit
+          <select id="depth-unit">
+            <option value="Meters" selected>Meters</option>
+            <option value="Fathoms">Fathoms</option>
+            <option value="Feet">Feet</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="section">
+        <h3>Depth Contours</h3>
+        <label>
+          Shallow
+          <div class="slider-row">
+            <input type="range" id="shallow" min="0" max="20" step="0.5" value="3" />
+            <span class="slider-val" id="shallow-val">3.0m</span>
+          </div>
+        </label>
+        <label>
+          Safety
+          <div class="slider-row">
+            <input type="range" id="safety" min="1" max="50" step="0.5" value="6" />
+            <span class="slider-val" id="safety-val">6.0m</span>
+          </div>
+        </label>
+        <label>
+          Deep
+          <div class="slider-row">
+            <input type="range" id="deep" min="2" max="100" step="1" value="9" />
+            <span class="slider-val" id="deep-val">9m</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="section">
+        <h3>Style Mode</h3>
+        <div class="mode-row" id="mode-row">
+          <button class="mode-btn active" data-mode="wasm-live">WASM live</button>
+          <button class="mode-btn" data-mode="prebaked">Pre-baked</button>
+          <button class="mode-btn" data-mode="none">None</button>
+        </div>
+        <p style="font-size:11px;color:#7fa8c8;margin-top:6px">
+          <b>WASM live</b>: engine computes style per feature.<br>
+          <b>Pre-baked</b>: use SY/AC/LC from tile (set by Python).<br>
+          <b>None</b>: no styling (baseline).
+        </p>
+      </div>
+
+      <div class="section" id="perf-box">
+        <h3>Performance</h3>
+        <div id="perf-rows"></div>
+      </div>
+
+      <div class="section">
+        <h3>Feature Info</h3>
+        <div id="feature-info">Click a feature on the map</div>
+      </div>
+
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "options": {
+    "paths": {
+      "root": "",
+      "fonts": "fonts",
+      "sprites": "sprites",
+      "styles": "styles",
+      "mbtiles": "data"
+    }
+  },
+  "styles": {
+    "day_meters": {
+      "style": "day_meters.json",
+      "serve_rendered": false
+    },
+    "day_fathoms": {
+      "style": "day_fathoms.json",
+      "serve_rendered": false
+    },
+    "day_feet": {
+      "style": "day_feet.json",
+      "serve_rendered": false
+    },
+    "dusk_meters": {
+      "style": "dusk_meters.json",
+      "serve_rendered": false
+    },
+    "dusk_fathoms": {
+      "style": "dusk_fathoms.json",
+      "serve_rendered": false
+    },
+    "dusk_feet": {
+      "style": "dusk_feet.json",
+      "serve_rendered": false
+    },
+    "night_meters": {
+      "style": "night_meters.json",
+      "serve_rendered": false
+    },
+    "night_fathoms": {
+      "style": "night_fathoms.json",
+      "serve_rendered": false
+    },
+    "night_feet": {
+      "style": "night_feet.json",
+      "serve_rendered": false
+    }
+  },
+  "data": {
+    "de-encs-styled": {
+      "mbtiles": "de-encs-styled.mbtiles"
+    }
+  }
+}
