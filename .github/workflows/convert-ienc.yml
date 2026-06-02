@@ -56,6 +56,11 @@ jobs:
         country: ${{ fromJson(needs.check-updates.outputs.countries_to_run) }}
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: assets
+          sparse-checkout-cone-mode: false
+
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -168,6 +173,39 @@ jobs:
           path: /tmp/enc-output/eu-ienc-*.mbtiles
           retention-days: 1
 
+      - name: Create styled zip
+        if: success() && hashFiles('assets/styles') != ''
+        run: |
+          COUNTRY_LOWER=$(echo "${{ matrix.country }}" | tr '[:upper:]' '[:lower:]')
+          NAME="eu-ienc-${COUNTRY_LOWER}"
+          ZIPDIR="/tmp/styled-zip-${{ matrix.country }}"
+          mkdir -p "$ZIPDIR/data"
+
+          cp "/tmp/enc-output/${NAME}.mbtiles" "$ZIPDIR/data/enc.mbtiles"
+          cp -r assets/styles assets/fonts "$ZIPDIR/"
+          cp -r assets/sprites "$ZIPDIR/"
+
+          SECTORS="/tmp/enc-output/${NAME}-sectors.json"
+          if [ -f "$SECTORS" ]; then
+            pip install pillow -q
+            python3 scripts/generate-styles/generate_sector_sprites.py \
+              "$SECTORS" "$ZIPDIR/sprites"
+          fi
+
+          cp assets/config.json "$ZIPDIR/config.json"
+
+          cd "$ZIPDIR"
+          zip -r "/tmp/enc-output/${NAME}-styled.zip" .
+          echo "Styled zip: $(du -sh /tmp/enc-output/${NAME}-styled.zip | cut -f1)"
+
+      - name: Upload styled zip artifact
+        if: success() && hashFiles('assets/styles') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: ienc-styled-zip-${{ matrix.country }}
+          path: /tmp/enc-output/eu-ienc-*-styled.zip
+          retention-days: 1
+
       - name: Upload result artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -271,6 +309,23 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for f in /tmp/mbtiles/eu-ienc-*.mbtiles; do
+            [ -f "$f" ] || continue
+            echo "Uploading $(basename "$f") ($(du -sh "$f" | cut -f1))"
+            gh release upload ienc-latest "$f" --clobber
+          done
+
+      - name: Download styled zip artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ienc-styled-zip-*
+          path: /tmp/styled-zips
+          merge-multiple: true
+
+      - name: Upload styled zips to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for f in /tmp/styled-zips/eu-ienc-*-styled.zip; do
             [ -f "$f" ] || continue
             echo "Uploading $(basename "$f") ($(du -sh "$f" | cut -f1))"
             gh release upload ienc-latest "$f" --clobber

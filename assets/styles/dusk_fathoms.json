@@ -1,0 +1,10705 @@
+{
+  "glyphs": "http://localhost:8080/fonts/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "paint": {
+        "background-color": "#000000"
+      },
+      "type": "background"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "DEPARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "DEPARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "LNDARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "LNDARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "SLOGRD_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "SLOGRD",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "LAKARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "LAKARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "BUISGL_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "BUISGL",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "BUAARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "BUAARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "OBSTRN_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "OBSTRN",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "LNDRGN_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "LNDRGN",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "DRGARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "DRGARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "ICEARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "ICEARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "CAUSWY_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "CAUSWY",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "CANALS_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "CANALS",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "RIVERS_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "RIVERS",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "AIRARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "AIRARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "RUNWAY_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "RUNWAY",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "DYKCON_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "DYKCON",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "LOKBSN_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "LOKBSN",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "LOGPON_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "LOGPON",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "DOCARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "DOCARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "FLODOC_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "FLODOC",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "WEDKLP_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "WEDKLP",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "FAIRWY_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "FAIRWY",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "TSSLPT_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "TSSLPT",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "TSSCRS_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "TSSCRS",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "TSSRON_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "TSSRON",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "DWRTPT_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "DWRTPT",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "TWRTPT_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "TWRTPT",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "TSEZNE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "TSEZNE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "RCTLPT_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "RCTLPT",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "RECTRC_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "RECTRC",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "PONTON_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "PONTON",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "BRIDGE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "BRIDGE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "DAMCON_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "DAMCON",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "HULKES_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "HULKES",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "PRDARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "PRDARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "RESARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "RESARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "CTNARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "CTNARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "ICNARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "ICNARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "ACHARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "ACHARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "CBLARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "CBLARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "SPLARE_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "SPLARE",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ],
+      "id": "FORSTC_fill",
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMD"
+          ],
+          "#0F1B21",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPMS"
+          ],
+          "#1D3246",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPVS"
+          ],
+          "#1E4165",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPIT"
+          ],
+          "#234C44",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "LANDA"
+          ],
+          "#40402E",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "TRFCF"
+          ],
+          "#772782",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "NODTA"
+          ],
+          "#404D53",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHWHT"
+          ],
+          "#8CA6B3",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "AC"
+            ],
+            "CHMGF"
+          ],
+          "#772782",
+          "rgba(0,0,0,0)"
+        ],
+        "fill-opacity": 0.8
+      },
+      "source": "senc",
+      "source-layer": "FORSTC",
+      "type": "fill"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "DEPARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "DEPARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "COALNE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "COALNE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "LAKSHR_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "LAKSHR",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "SLCONS_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "SLCONS",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "CBLSUB_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "CBLSUB",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "CBLOHD_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "CBLOHD",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "RESARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RESARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "FAIRWY_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "FAIRWY",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "TSSBND_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "TSSBND",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "TSELNE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "TSELNE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "TWRTPT_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "TWRTPT",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "DWRTCL_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "DWRTCL",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "MIPARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "MIPARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "CBLARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "CBLARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "NAVLNE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "NAVLNE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "RADLNE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RADLNE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "RADRNG_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RADRNG",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "RCRTCL_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RCRTCL",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "UNSARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "UNSARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "DMPGRD_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "DMPGRD",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "FNCLNE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "FNCLNE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "FERYRT_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "FERYRT",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "FSHGRD_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "FSHGRD",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "SUBTLN_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "SUBTLN",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "SWPARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "SWPARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "TCTLPT_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "TCTLPT",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "PIPARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "PIPARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "OILBAR_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "OILBAR",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "PRCARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "PRCARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "SPLARE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "SPLARE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "TUNNEL_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "TUNNEL",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "!=",
+        "$type",
+        "Point"
+      ],
+      "id": "ISTZNE_line",
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRD"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CSTLN"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBLK"
+          ],
+          "#6B7F89",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHMGD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "TRFCD"
+          ],
+          "#826CA1",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHBRN"
+          ],
+          "#57502A",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHRED"
+          ],
+          "#9B3549",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHYLW"
+          ],
+          "#8B8B1F",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "RADHI"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "DEPDW"
+          ],
+          "#000000",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "CHGRN"
+          ],
+          "#2F8E20",
+          [
+            "==",
+            [
+              "get",
+              "LC"
+            ],
+            "LANDF"
+          ],
+          "#7F5A29",
+          "rgba(0,0,0,0)"
+        ],
+        "line-width": 1.0
+      },
+      "source": "senc",
+      "source-layer": "ISTZNE",
+      "type": "line"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BCNCAR_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BCNCAR",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BCNISD_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BCNISD",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BCNLAT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BCNLAT",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BCNSAW_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BCNSAW",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BCNSPP_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BCNSPP",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BOYCAR_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BOYCAR",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BOYISD_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BOYISD",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BOYLAT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BOYLAT",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BOYSAW_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BOYSAW",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BOYSPP_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BOYSPP",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "BOYINB_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "BOYINB",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "TOPMAR_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "TOPMAR",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "DAYMAR_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "DAYMAR",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "OBSTRN_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "OBSTRN",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "WRECKS_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "WRECKS",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "UWTROC_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "UWTROC",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "LNDMRK_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "LNDMRK",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "HULKES_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "HULKES",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "MORFAC_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "MORFAC",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "ACHBRT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "ACHBRT",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "ACHPNT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "ACHPNT",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "FOGSIG_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "FOGSIG",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "CRANES_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "CRANES",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "OFSPLF_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "OFSPLF",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "OSPARE_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "OSPARE",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "PYLONS_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "PYLONS",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "SISTAT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "SISTAT",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "SISTAW_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "SISTAW",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "LITFLT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "LITFLT",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "LITVES_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "LITVES",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "SILTNK_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "SILTNK",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "RADRFL_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RADRFL",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "RTPBCN_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RTPBCN",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "RDOCAL_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RDOCAL",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "CURENT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "CURENT",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "NEWOBJ_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "NEWOBJ",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "DISMAR_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "DISMAR",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "MARCUL_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "MARCUL",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "FSHFAC_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "FSHFAC",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "GATCON_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "GATCON",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "RETRFL_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "RETRFL",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "PILBOP_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "PILBOP",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "PILPNT_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "PILPNT",
+      "type": "symbol"
+    },
+    {
+      "id": "light_arcs",
+      "type": "line",
+      "source": "senc",
+      "source-layer": "light_arcs",
+      "minzoom": 10,
+      "paint": {
+        "line-color": [
+          "match",
+          [
+            "get",
+            "colour"
+          ],
+          "1",
+          "#FECC86",
+          "3",
+          "#FF0000",
+          "4",
+          "#00B049",
+          "6",
+          "#FFFF00",
+          "#888888"
+        ],
+        "line-width": 1.5,
+        "line-opacity": 0.9
+      }
+    },
+    {
+      "filter": [
+        "all",
+        [
+          "==",
+          "$type",
+          "Point"
+        ],
+        [
+          "has",
+          "SI"
+        ]
+      ],
+      "id": "LIGHTS_sector",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "center",
+        "icon-image": [
+          "get",
+          "SI"
+        ],
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "LIGHTS",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "all",
+        [
+          "==",
+          "$type",
+          "Point"
+        ],
+        [
+          "!has",
+          "SI"
+        ]
+      ],
+      "id": "LIGHTS_symbol",
+      "layout": {
+        "icon-allow-overlap": true,
+        "icon-anchor": "bottom",
+        "icon-image": [
+          "get",
+          "SY"
+        ],
+        "icon-rotate": 135.0,
+        "icon-size": 1.0
+      },
+      "source": "senc",
+      "source-layer": "LIGHTS",
+      "type": "symbol"
+    },
+    {
+      "filter": [
+        "==",
+        "$type",
+        "Point"
+      ],
+      "id": "SOUNDG_text",
+      "layout": {
+        "text-allow-overlap": false,
+        "text-anchor": "center",
+        "text-field": [
+          "concat",
+          [
+            "to-string",
+            [
+              "floor",
+              [
+                "*",
+                [
+                  "get",
+                  "DEPTH"
+                ],
+                0.546807
+              ]
+            ]
+          ],
+          "f"
+        ],
+        "text-font": [
+          "Roboto Bold"
+        ],
+        "text-size": 10
+      },
+      "paint": {
+        "text-color": "#8CA6B3"
+      },
+      "source": "senc",
+      "source-layer": "SOUNDG",
+      "type": "symbol"
+    }
+  ],
+  "name": "dusk_fathoms",
+  "sources": {
+    "senc": {
+      "type": "vector",
+      "url": "http://localhost:8080/data/enc.json"
+    }
+  },
+  "sprite": "dusk_simplified",
+  "version": 8
+}

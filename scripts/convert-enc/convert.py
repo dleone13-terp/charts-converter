@@ -61,6 +61,11 @@ from typing import Optional
 
 EXPORT_ERROR_FILE_BASENAME = '.export-errors.log'
 
+# Geographic radius for light sector arcs in degrees (~2.5 km at mid-latitudes).
+# Arcs are baked into the tile geometry so any MapLibre GL consumer renders them
+# without custom client code.
+_LIGHT_ARC_RADIUS_DEG = 0.025
+
 # ── Optional s57style integration ─────────────────────────────────────────────
 
 def _make_styler(opts: dict):
@@ -340,11 +345,63 @@ def _with_tippecanoe_minzoom(feature: dict, minzoom: int) -> dict:
     existing = feature.get('tippecanoe') if isinstance(feature.get('tippecanoe'), dict) else {}
     return {**feature, 'tippecanoe': {**existing, 'minzoom': minzoom}}
 
-def _consolidate(geojsons_dir: str, user_minzoom: int, styler=None) -> list[dict]:
+
+def _light_arc(feat: dict) -> 'dict | None':
+    """
+    Build a light_arcs LineString arc for a LIGHTS Point with SECTR1/SECTR2.
+    Omnidirectional lights (span >= 359°) are skipped — no sector to draw.
+    The arc is written as tile geometry so any MapLibre GL consumer can render it
+    without a custom client-side handler.
+    """
+    if feat.get('geometry', {}).get('type') != 'Point':
+        return None
+    props = feat.get('properties', {})
+    try:
+        sectr1 = float(props['SECTR1'])
+        sectr2 = float(props['SECTR2'])
+    except (KeyError, TypeError, ValueError):
+        return None
+
+    lon, lat = feat['geometry']['coordinates']
+    cos_lat = math.cos(math.radians(lat)) or 1e-9
+
+    start = sectr1 % 360
+    end   = sectr2 % 360
+    if end <= start:
+        end += 360
+    span = end - start
+    if span < 1.0 or span >= 359.0:
+        return None
+
+    n_pts = max(6, int(span / 3))
+    coords = []
+    for i in range(n_pts + 1):
+        b = math.radians(start + span * i / n_pts)
+        coords.append([
+            round(lon + _LIGHT_ARC_RADIUS_DEG * math.sin(b) / cos_lat, 6),
+            round(lat + _LIGHT_ARC_RADIUS_DEG * math.cos(b), 6),
+        ])
+
+    colour = str(props.get('COLOUR', '')).split(',')[0].strip()
+    arc_props = {'layer': 'light_arcs', 'colour': colour}
+    for k in ('LITCHR', 'SIGPER', 'VALNMR', 'CATLIT'):
+        if k in props:
+            arc_props[k] = props[k]
+
+    return {
+        'type': 'Feature',
+        'geometry': {'type': 'LineString', 'coordinates': coords},
+        'tippecanoe': {'minzoom': 10},
+        'properties': arc_props,
+    }
+
+
+def _consolidate(geojsons_dir: str, user_minzoom: int, styler=None) -> tuple[list[dict], set[str]]:
     """
     Stream-merge per-chart-per-layer .geojsons files into one RS-prefixed
     GeoJSONSeq per layer. Reads line-by-line — never loads a whole file.
     RS prefix causes tippecanoe to auto-enable parallel reads.
+    Returns (consolidated_layers, sector_si_values).
     """
     files = [f for f in os.listdir(geojsons_dir) if f.endswith('.geojsons')]
 
@@ -361,6 +418,9 @@ def _consolidate(geojsons_dir: str, user_minzoom: int, styler=None) -> list[dict
     merged_dir = os.path.join(geojsons_dir, '.merged')
     os.makedirs(merged_dir, exist_ok=True)
 
+    light_arcs: list[dict] = []
+    sector_si: set[str] = set()
+
     consolidated = []
     for layer, sources in groups.items():
         out_path = os.path.join(merged_dir, f'{layer}.geojsons')
@@ -373,14 +433,9 @@ def _consolidate(geojsons_dir: str, user_minzoom: int, styler=None) -> list[dict
                     if props := feat.get('properties'):
                         feat = {**feat, 'properties': {k: v for k, v in props.items() if k not in _SKIP_PROPERTIES}}
 
-                    # Stamp every feature with its S-57 layer name so tile clients
-                    # can look it up without inspecting the tile layer header.
                     curr_props: dict = dict(feat.get('properties') or {})
                     curr_props['layer'] = layer
-
-                    # Apply conditional S-57 styling (SY/AC/LC/AP/LP/EA) when --style is set.
                     curr_props = _apply_s57_style(curr_props, layer, styler)
-
                     feat = {**feat, 'properties': curr_props}
 
                     scamin_floor = scamin_to_minzoom(curr_props.get('SCAMIN'))
@@ -388,9 +443,26 @@ def _consolidate(geojsons_dir: str, user_minzoom: int, styler=None) -> list[dict
                     if floors:
                         feat = _with_tippecanoe_minzoom(feat, max(user_minzoom, *floors))
                     out.write(f'{_RS}{json.dumps(feat, separators=(",", ":"))}\n')
+
+                    if layer == 'LIGHTS':
+                        arc = _light_arc(feat)
+                        if arc is not None:
+                            light_arcs.append(arc)
+                        si = curr_props.get('SI')
+                        if si:
+                            sector_si.add(si)
+
         consolidated.append({'file': out_path, 'source_files': sources})
 
-    return consolidated
+    if light_arcs:
+        arcs_path = os.path.join(merged_dir, 'light_arcs.geojsons')
+        with open(arcs_path, 'w') as f:
+            for arc in light_arcs:
+                f.write(f'{_RS}{json.dumps(arc, separators=(",", ":"))}\n')
+        consolidated.append({'file': arcs_path, 'source_files': []})
+        print(f'  light_arcs: {len(light_arcs)} sector arc(s)')
+
+    return consolidated, sector_si
 
 # ── Pipeline steps ────────────────────────────────────────────────────────────
 
@@ -427,8 +499,8 @@ def _export_layers(enc_dir: str, enc_files: list[str], out_dir: str) -> None:
 def _run_tippecanoe(
     geojsons_dir: str, output_mbtiles: str,
     minzoom: int, maxzoom: int, threads: int | None = None, styler=None,
-) -> None:
-    layers = _consolidate(geojsons_dir, minzoom, styler)
+) -> set[str]:
+    layers, sector_si = _consolidate(geojsons_dir, minzoom, styler)
     if not layers:
         raise RuntimeError('No GeoJSONSeq layers to tile')
 
@@ -470,6 +542,7 @@ def _run_tippecanoe(
     if rc != 0:
         raise RuntimeError(f'tippecanoe failed (exit {rc})')
     shutil.rmtree(merged_dir, ignore_errors=True)
+    return sector_si
 
 def _run_tile_join(inputs: list[str], output: str) -> None:
     if len(inputs) == 1:
@@ -498,14 +571,14 @@ def _run_band(
     user_max: int,
     threads: int,
     styler=None,
-) -> str | None:
+) -> tuple[str | None, set[str]]:
     """Full export → consolidate → tippecanoe for one band bucket."""
     if band is not None:
         b_min = max(user_min, BAND_MIN_ZOOM.get(band, user_min))
         b_max = min(user_max, BAND_MAX_ZOOM.get(band, user_max))
         if b_min > b_max:
             print(f'{label} skipped (z{user_max} below band floor z{b_min})')
-            return None
+            return None, set()
         note = []
         if b_min > user_min: note.append(f'min raised to z{b_min}')
         if b_max < user_max: note.append(f'clamped to z{b_max}')
@@ -535,13 +608,13 @@ def _run_band(
 
     mbtiles = os.path.join(tmp_dir, f'band-{slug}.mbtiles')
     print(f'{label} Tippecanoe z{b_min}-z{b_max} ({threads} threads)')
-    _run_tippecanoe(band_out, mbtiles, b_min, b_max, threads, styler)
-    return mbtiles
+    sector_si = _run_tippecanoe(band_out, mbtiles, b_min, b_max, threads, styler)
+    return mbtiles, sector_si
 
 def _per_band_pipeline(
     enc_dir: str, enc_files: list[str],
     tmp_dir: str, options: dict, output: str, styler=None,
-) -> None:
+) -> set[str]:
     grouping = group_cells_by_band(enc_files)
     user_min = options.get('minzoom', 9)
     user_max = options.get('maxzoom', 16)
@@ -574,33 +647,45 @@ def _per_band_pipeline(
             )] = label
 
         intermediates = []
+        sector_si_all: set[str] = set()
         for fut in as_completed(futs):
-            result = fut.result()
-            if result:
-                intermediates.append(result)
-                print(f'{futs[fut]} → {os.path.basename(result)}')
+            mbtiles, si = fut.result()
+            if mbtiles:
+                intermediates.append(mbtiles)
+                print(f'{futs[fut]} → {os.path.basename(mbtiles)}')
+            sector_si_all.update(si)
 
     if not intermediates:
         raise RuntimeError('All bands skipped — no tile output.')
     _run_tile_join(intermediates, output)
+    return sector_si_all
 
 # ── MBTiles metadata ──────────────────────────────────────────────────────────
 
-def patch_mbtiles(path: str, name: str, tile_url: str | None = None, styler=None) -> None:
+def patch_mbtiles(
+    path: str,
+    name: str,
+    server: str = 'http://localhost:8080',
+    theme: str = 'Day',
+    depth_unit: str = 'Meters',
+    styler=None,
+) -> None:
     try:
         conn = sqlite3.connect(path)
         try:
             conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS _metadata_name ON metadata(name)")
             rows = [('type', 'S-57'), ('name', f'S-57 {name}')]
 
-            # When styling is enabled, embed a Mapbox GL style JSON in metadata
-            # so martin/tileserver-gl can serve it at /style.json.
+            # Embed a Mapbox GL style JSON so tileserver-gl serves it at
+            # /data/{name}/style.json without needing a separate style file.
             if styler is not None:
-                effective_url = tile_url or 'REPLACE_WITH_TILE_SERVER_URL/{z}/{x}/{y}'
-                sprite_url = tile_url.rstrip('/') + '/sprites/sprite' if tile_url else None
-                glyphs_url = (tile_url.rstrip('/') + '/fonts/{fontstack}/{range}.pbf'
-                              if tile_url else None)
-                style_json = styler.mapbox_style_json(effective_url, sprite_url, glyphs_url)
+                source_url = f'{server}/data/{name}.json'
+                # Mirror the per-style sprite URL that generate_styles.py uses;
+                # tileserver-gl serves /styles/{id}/sprite.* from sprites/{id}.*
+                style_id = f'{theme.lower()}_{depth_unit.lower()}'
+                sprite_url = f'{server}/styles/{style_id}/sprite'
+                glyphs_url = f'{server}/fonts/{{fontstack}}/{{range}}.pbf'
+                style_json = styler.mapbox_style_json(source_url, sprite_url, glyphs_url)
                 rows.append(('style', style_json))
                 print(f'MBTiles: embedded Mapbox GL style JSON ({len(style_json)} bytes)')
 
@@ -651,19 +736,34 @@ def process(input_path: str, output: str, options: dict | None = None) -> None:
             bands_str = ', '.join(str(b) for b in grouping['bands']) or '(none)'
             unbanded_str = f' + {len(grouping["unbanded"])} unbanded' if grouping['unbanded'] else ''
             print(f'Per-band pipeline: {bucket_count} buckets [bands {bands_str}{unbanded_str}]')
-            _per_band_pipeline(enc_dir, enc_files, tmp, options, output, styler)
+            sector_si = _per_band_pipeline(enc_dir, enc_files, tmp, options, output, styler)
         else:
             print(f'Single-pass: {len(enc_files)} ENC file(s)')
             if clamp['highest_band'] and clamp['effective'] < user_max:
                 print(f"Maxzoom clamped to z{clamp['effective']} (band {clamp['highest_band']})")
             _export_layers(enc_dir, enc_files, geojsons_dir)
             ncpus = os.cpu_count() or 1
-            _run_tippecanoe(geojsons_dir, output, options.get('minzoom', 9), clamp['effective'], ncpus, styler)
+            sector_si = _run_tippecanoe(geojsons_dir, output, options.get('minzoom', 9), clamp['effective'], ncpus, styler)
 
         if not os.path.exists(output):
             raise RuntimeError('tippecanoe finished but output not found')
 
-        patch_mbtiles(output, os.path.basename(output).removesuffix('.mbtiles'), styler=styler)
+        mbtiles_name = os.path.basename(output).removesuffix('.mbtiles')
+
+        if sector_si:
+            sectors_path = os.path.join(os.path.dirname(output) or '.', f'{mbtiles_name}-sectors.json')
+            with open(sectors_path, 'w') as f:
+                json.dump(sorted(sector_si), f, indent=2)
+            print(f'Sectors: {len(sector_si)} unique light sector SI value(s) → {sectors_path}')
+
+        patch_mbtiles(
+            output,
+            mbtiles_name,
+            server=options.get('server', 'http://localhost:8080'),
+            theme=options.get('theme', 'Day'),
+            depth_unit=options.get('depth_unit', 'Meters'),
+            styler=styler,
+        )
         size_mb = os.path.getsize(output) / (1024 * 1024)
         print(f'Done: {output} ({size_mb:.1f} MB)')
 
@@ -704,6 +804,11 @@ def main() -> None:
     style_grp.add_argument('--depth-unit', default='Meters',
                            choices=['Meters', 'Fathoms', 'Feet'],
                            help='Depth unit (default: Meters)')
+    style_grp.add_argument(
+        '--server', default='http://localhost:8080', metavar='URL',
+        help='Base URL of the tileserver-gl instance used in the embedded style '
+             '(default: http://localhost:8080)',
+    )
 
     ns = parser.parse_args()
 
@@ -728,6 +833,7 @@ def main() -> None:
         'deep_depth': ns.deep,
         'theme': ns.theme,
         'depth_unit': ns.depth_unit,
+        'server': ns.server,
     }
 
     start = time.monotonic()

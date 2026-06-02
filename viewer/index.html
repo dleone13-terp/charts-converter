@@ -67,7 +67,17 @@
     }
     label:last-child { margin-bottom: 0; }
 
-    input[type="text"], input[type="url"], select {
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: #a8c0d8;
+      font-size: 12px;
+    }
+    .label-row:last-child { margin-bottom: 0; }
+
+    input[type="text"], input[type="url"] {
       background: #1a2332;
       border: 1px solid #2d4a6e;
       border-radius: 4px;
@@ -77,23 +87,25 @@
       width: 100%;
     }
 
-    .theme-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 4px;
+    input[type="checkbox"] {
+      accent-color: #2d6ab4;
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
-    .theme-btn {
-      background: #1a2332;
-      color: #a8c0d8;
-      border: 1px solid #2d4a6e;
+
+    button#load-btn {
+      width: 100%;
+      background: #2d6ab4;
+      color: #fff;
+      border: none;
       border-radius: 4px;
-      padding: 5px 4px;
-      font-size: 11px;
+      padding: 6px 0;
+      font-size: 12px;
       cursor: pointer;
-      text-align: center;
+      margin-top: 6px;
     }
-    .theme-btn:hover { background: #243447; }
-    .theme-btn.active { background: #2d6ab4; color: #fff; border-color: #2d6ab4; }
+    button#load-btn:hover { background: #3a80d4; }
 
     #feature-info {
       font-size: 11px;
@@ -114,7 +126,7 @@
       color: #7fa8c8;
       margin-left: auto;
     }
-    #status.ok { background: #1a4a1a; color: #52e83b; }
+    #status.ok  { background: #1a4a1a; color: #52e83b; }
     #status.err { background: #4a1a1a; color: #ea5471; }
 
     #map { grid-area: map; }
@@ -131,33 +143,23 @@
     <div id="sidebar">
 
       <div class="section">
-        <h3>Tile Server</h3>
+        <h3>Style</h3>
         <label>
-          URL
-          <input type="url" id="server-url" value="http://localhost:8080" />
+          Style JSON URL
+          <input type="url" id="style-url"
+            value="http://localhost:8080/styles/day_meters/style.json"
+            placeholder="http://tileserver/styles/name/style.json" />
         </label>
         <label>
-          Dataset
-          <input type="text" id="data-name" value="de-encs-styled" />
+          Tile source override (TileJSON URL)
+          <input type="url" id="tile-source-url"
+            placeholder="http://localhost:3000/signalk/v1/api/resources/charts/de-encs-styled" />
         </label>
-      </div>
-
-      <div class="section">
-        <h3>Theme</h3>
-        <div class="theme-grid">
-          <button class="theme-btn active" data-theme="day">Day</button>
-          <button class="theme-btn" data-theme="dusk">Dusk</button>
-          <button class="theme-btn" data-theme="night">Night</button>
+        <div class="label-row">
+          <input type="checkbox" id="use-osm" checked />
+          <span>OSM basemap underlay</span>
         </div>
-      </div>
-
-      <div class="section">
-        <h3>Depth Unit</h3>
-        <div class="theme-grid">
-          <button class="theme-btn active" data-unit="meters">Meters</button>
-          <button class="theme-btn" data-unit="fathoms">Fathoms</button>
-          <button class="theme-btn" data-unit="feet">Feet</button>
-        </div>
+        <button id="load-btn">Load</button>
       </div>
 
       <div class="section">

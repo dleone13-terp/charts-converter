@@ -1,0 +1,63 @@
+{
+  "options": {
+    "paths": {
+      "root": "",
+      "fonts": "fonts",
+      "sprites": "sprites",
+      "styles": "styles",
+      "mbtiles": "data"
+    }
+  },
+  "styles": {
+    "day_meters": {
+      "style": "day_meters.json",
+      "serve_rendered": false,
+      "sprite": "day_meters"
+    },
+    "day_fathoms": {
+      "style": "day_fathoms.json",
+      "serve_rendered": false,
+      "sprite": "day_fathoms"
+    },
+    "day_feet": {
+      "style": "day_feet.json",
+      "serve_rendered": false,
+      "sprite": "day_feet"
+    },
+    "dusk_meters": {
+      "style": "dusk_meters.json",
+      "serve_rendered": false,
+      "sprite": "dusk_meters"
+    },
+    "dusk_fathoms": {
+      "style": "dusk_fathoms.json",
+      "serve_rendered": false,
+      "sprite": "dusk_fathoms"
+    },
+    "dusk_feet": {
+      "style": "dusk_feet.json",
+      "serve_rendered": false,
+      "sprite": "dusk_feet"
+    },
+    "night_meters": {
+      "style": "night_meters.json",
+      "serve_rendered": false,
+      "sprite": "night_meters"
+    },
+    "night_fathoms": {
+      "style": "night_fathoms.json",
+      "serve_rendered": false,
+      "sprite": "night_fathoms"
+    },
+    "night_feet": {
+      "style": "night_feet.json",
+      "serve_rendered": false,
+      "sprite": "night_feet"
+    }
+  },
+  "data": {
+    "enc": {
+      "mbtiles": "enc.mbtiles"
+    }
+  }
+}
