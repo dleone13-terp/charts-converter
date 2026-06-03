@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
-Merge pre-rasterized light-sector icons into the three theme spritesheets.
+Merge light-sector icons into the three theme spritesheets.
 
-Reads a sectors JSON file (list of SI image-name strings written by convert.py),
-generates a Pillow-rendered icon for each sector × theme, and appends them to the
-existing {theme}_simplified.{png,json} and {theme}_simplified@2x.{png,json} files.
+Icon naming: sector_{SECTR1}_{SECTR2}_{COLOUR_CODE}
+  e.g. sector_270_90_3  (red sector from 270° to 90°)
+
+Colour codes match S-57 COLOUR attribute values:
+  1 = white (theme-varying)   3 = red   4 = green   6 = yellow
 
 Usage:
     python3 generate_sector_sprites.py <sectors.json> <sprites-dir>
@@ -25,11 +27,21 @@ except ImportError:
     sys.exit(1)
 
 THEMES = ["day", "dusk", "night"]
-_FILL_IDX = {"day": 3, "dusk": 4, "night": 5}
-_LINE_IDX = {"day": 6, "dusk": 7, "night": 8}
 
-ICON_SIZE   = 64   # 1× pixels — fits spritesheet limits and renders at a sane screen size
-ICON_RADIUS = 26   # arc radius in the 1× coordinate space (80 * 64/200)
+# S-57 colour code → (day_fill, dusk_fill, night_fill)
+_FILLS: dict[str, tuple[str, str, str]] = {
+    '1': ('#FFFFFF', '#FECC86', '#CC8E3B'),   # white  — theme-varying per S-52
+    '3': ('#FF0000', '#FF0000', '#CC0000'),   # red
+    '4': ('#00B049', '#00B049', '#007030'),   # green
+    '6': ('#FFFF00', '#FFFF00', '#CCCC00'),   # yellow
+}
+_FILL_DEFAULT = ('#888888', '#888888', '#666666')
+_LINE_COLOUR  = '#333333'   # radial line colour (same for all themes)
+
+ICON_SIZE   = 64   # 1× pixels
+ICON_RADIUS = 26   # arc radius in 1× coordinate space
+
+_MAX_TEXTURE_SIZE = 4096
 
 
 # ── Drawing helpers ────────────────────────────────────────────────────────────
@@ -43,8 +55,8 @@ def _hex_rgba(h: str, alpha: int = 230) -> tuple[int, int, int, int]:
 
 def _dashed_line(draw: ImageDraw.ImageDraw,
                  x0: float, y0: float, x1: float, y1: float,
-                 color: tuple, width: int = 2,
-                 dash: float = 4, gap: float = 6) -> None:
+                 color: tuple, width: int = 1,
+                 dash: float = 3, gap: float = 4) -> None:
     dx, dy = x1 - x0, y1 - y0
     total = math.hypot(dx, dy)
     if total == 0:
@@ -70,51 +82,42 @@ def _draw_icon(sectr1: float, sectr2: float,
     fill = _hex_rgba(fill_hex)
     line = _hex_rgba(line_hex)
 
-    # S-57 SECTR1/SECTR2 are bearings FROM the navigator TO the light.
-    # Add 180° to get the direction outward from the light (matches the JS viewer).
+    # S-57 SECTR1/SECTR2 are bearings FROM navigator TO light.
+    # Add 180° to get direction outward from the light.
     start = (sectr1 + 180) % 360
     end   = (sectr2 + 180) % 360
     if end <= start:
         end += 360
     span = end - start
-    if span < 1.0 or span >= 359.0:
-        # Omnidirectional — draw a full circle instead of a sector
-        r = radius * size / ICON_SIZE
-        draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=fill, width=4)
-        return img
 
     r = radius * size / ICON_SIZE
 
-    # Arc endpoints (bearing coords: 0 = north, clockwise)
+    if span < 1.0 or span >= 359.0:
+        draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=fill, width=2)
+        return img
+
     a1 = math.radians(start)
     a2 = math.radians(start + span)
     x1 = cx + r * math.sin(a1);  y1 = cy - r * math.cos(a1)
     x2 = cx + r * math.sin(a2);  y2 = cy - r * math.cos(a2)
 
-    # PIL arc: 0 = east (right), clockwise.  Convert from bearing: pil = bearing − 90
+    # PIL arc: 0=east, clockwise; convert from bearing: pil = bearing − 90
     pil_start = (start - 90) % 360
     pil_end   = (start + span - 90) % 360
-    draw.arc([cx - r, cy - r, cx + r, cy + r], pil_start, pil_end, fill=fill, width=4)
+    draw.arc([cx - r, cy - r, cx + r, cy + r], pil_start, pil_end, fill=fill, width=2)
 
-    _dashed_line(draw, cx, cy, x1, y1, line, width=2)
-    _dashed_line(draw, cx, cy, x2, y2, line, width=2)
+    _dashed_line(draw, cx, cy, x1, y1, line, width=1)
+    _dashed_line(draw, cx, cy, x2, y2, line, width=1)
 
     return img
 
 
 # ── Spritesheet helpers ────────────────────────────────────────────────────────
 
-# Conservative WebGL max texture dimension (guaranteed on all modern devices).
-_MAX_TEXTURE_SIZE = 4096
-
-
 def _append_icons(png_path: str, json_path: str,
                   icons: list[tuple[str, Image.Image]],
                   pixel_ratio: int) -> None:
-    """
-    Add icons to the spritesheet in a 2D grid placed below the existing content.
-    All icons must be the same size. Stays within _MAX_TEXTURE_SIZE in width.
-    """
+    """Add icons in a 2-D grid placed below the existing sheet content."""
     if not icons:
         return
 
@@ -131,8 +134,7 @@ def _append_icons(png_path: str, json_path: str,
     if new_w > _MAX_TEXTURE_SIZE or new_h > _MAX_TEXTURE_SIZE:
         print(
             f"  WARNING: spritesheet will be {new_w}×{new_h}px — "
-            f"exceeds {_MAX_TEXTURE_SIZE}px safe limit. "
-            f"Consider reducing ICON_SIZE.",
+            f"exceeds {_MAX_TEXTURE_SIZE}px limit. Reduce ICON_SIZE.",
             file=sys.stderr,
         )
 
@@ -161,41 +163,36 @@ def _append_icons(png_path: str, json_path: str,
 def generate_sector_sprites(sectors_json: str, sprites_dir: str) -> None:
     si_values: list[str] = json.loads(open(sectors_json).read())
     if not si_values:
-        print("No sector SI values — nothing to do.")
+        print("No sector values — nothing to do.")
         return
 
-    # Parse: sector_{s1}_{s2}_{dayFill}_{duskFill}_{nightFill}_{dayLine}_{duskLine}_{nightLine}_{radius}
-    parsed: list[tuple[str, list[str]]] = []
+    # Parse: sector_{sectr1}_{sectr2}_{colour_code}
+    parsed: list[tuple[str, float, float, str]] = []
     for si in si_values:
         parts = si.split('_')
-        if len(parts) >= 10 and parts[0] == 'sector':
-            parsed.append((si, parts))
+        if len(parts) == 4 and parts[0] == 'sector':
+            try:
+                parsed.append((si, float(parts[1]), float(parts[2]), parts[3]))
+            except ValueError:
+                print(f"  skipping unparseable: {si!r}", file=sys.stderr)
         else:
-            print(f"  skipping unparseable SI value: {si!r}", file=sys.stderr)
+            print(f"  skipping unparseable: {si!r}", file=sys.stderr)
 
     if not parsed:
-        print("No parseable SI values.")
+        print("No parseable sector values.")
         return
 
-    print(f"Generating sector sprites for {len(parsed)} SI value(s) × {len(THEMES)} themes...")
+    print(f"Generating sector sprites: {len(parsed)} unique configs × {len(THEMES)} themes")
 
-    for theme in THEMES:
-        fi = _FILL_IDX[theme]
-        li = _LINE_IDX[theme]
+    for t_idx, theme in enumerate(THEMES):
         icons_1x: list[tuple[str, Image.Image]] = []
         icons_2x: list[tuple[str, Image.Image]] = []
 
-        for si, parts in parsed:
-            try:
-                s1, s2   = float(parts[1]), float(parts[2])
-                fill_hex = parts[fi]
-                line_hex = parts[li]
-                radius   = float(parts[9])
-            except (ValueError, IndexError):
-                continue
-
-            icons_1x.append((si, _draw_icon(s1, s2, fill_hex, line_hex, ICON_SIZE,     radius)))
-            icons_2x.append((si, _draw_icon(s1, s2, fill_hex, line_hex, ICON_SIZE * 2, radius * 2)))
+        for si, s1, s2, colour in parsed:
+            fills = _FILLS.get(colour, _FILL_DEFAULT)
+            fill  = fills[t_idx]
+            icons_1x.append((si, _draw_icon(s1, s2, fill, _LINE_COLOUR, ICON_SIZE,     ICON_RADIUS)))
+            icons_2x.append((si, _draw_icon(s1, s2, fill, _LINE_COLOUR, ICON_SIZE * 2, ICON_RADIUS * 2)))
 
         base = os.path.join(sprites_dir, f'{theme}_simplified')
         _append_icons(f'{base}.png',    f'{base}.json',    icons_1x, pixel_ratio=1)

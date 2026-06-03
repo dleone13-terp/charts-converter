@@ -56,11 +56,6 @@ jobs:
         country: ${{ fromJson(needs.check-updates.outputs.countries_to_run) }}
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: assets
-          sparse-checkout-cone-mode: false
-
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -173,37 +168,12 @@ jobs:
           path: /tmp/enc-output/eu-ienc-*.mbtiles
           retention-days: 1
 
-      - name: Create styled zip
-        if: success() && hashFiles('assets/styles') != ''
-        run: |
-          COUNTRY_LOWER=$(echo "${{ matrix.country }}" | tr '[:upper:]' '[:lower:]')
-          NAME="eu-ienc-${COUNTRY_LOWER}"
-          ZIPDIR="/tmp/styled-zip-${{ matrix.country }}"
-          mkdir -p "$ZIPDIR/data"
-
-          cp "/tmp/enc-output/${NAME}.mbtiles" "$ZIPDIR/data/enc.mbtiles"
-          cp -r assets/styles assets/fonts "$ZIPDIR/"
-          cp -r assets/sprites "$ZIPDIR/"
-
-          SECTORS="/tmp/enc-output/${NAME}-sectors.json"
-          if [ -f "$SECTORS" ]; then
-            pip install pillow -q
-            python3 scripts/generate-styles/generate_sector_sprites.py \
-              "$SECTORS" "$ZIPDIR/sprites"
-          fi
-
-          cp assets/config.json "$ZIPDIR/config.json"
-
-          cd "$ZIPDIR"
-          zip -r "/tmp/enc-output/${NAME}-styled.zip" .
-          echo "Styled zip: $(du -sh /tmp/enc-output/${NAME}-styled.zip | cut -f1)"
-
-      - name: Upload styled zip artifact
-        if: success() && hashFiles('assets/styles') != ''
+      - name: Upload sectors JSON artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: ienc-styled-zip-${{ matrix.country }}
-          path: /tmp/enc-output/eu-ienc-*-styled.zip
+          name: ienc-sectors-${{ matrix.country }}
+          path: /tmp/enc-output/eu-ienc-*-sectors.json
           retention-days: 1
 
       - name: Upload result artifact
@@ -314,12 +284,48 @@ jobs:
             gh release upload ienc-latest "$f" --clobber
           done
 
-      - name: Download styled zip artifacts
+      - name: Download sectors JSON artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: ienc-styled-zip-*
-          path: /tmp/styled-zips
+          pattern: ienc-sectors-*
+          path: /tmp/sectors
           merge-multiple: true
+
+      - name: Build shared sector spritesheet and create styled zips
+        run: |
+          pip install pillow -q
+
+          python3 - <<'PY'
+          import json, glob
+          combined = set()
+          for f in glob.glob('/tmp/sectors/*.json'):
+              combined.update(json.load(open(f)))
+          out = sorted(combined)
+          with open('/tmp/combined-sectors.json', 'w') as fh:
+              json.dump(out, fh, indent=2)
+          print(f"Combined sectors: {len(out)} unique configs across all countries")
+          PY
+
+          cp -r assets/sprites /tmp/shared-sprites
+          if python3 -c "import json; v=json.load(open('/tmp/combined-sectors.json')); exit(0 if v else 1)" 2>/dev/null; then
+            python3 scripts/generate-styles/generate_sector_sprites.py \
+              /tmp/combined-sectors.json /tmp/shared-sprites
+          fi
+
+          mkdir -p /tmp/styled-zips
+          for mbtiles in /tmp/mbtiles/eu-ienc-*.mbtiles; do
+            [ -f "$mbtiles" ] || continue
+            name=$(basename "$mbtiles" .mbtiles)
+            zipdir="/tmp/zipbuild-${name}"
+            mkdir -p "$zipdir/data"
+            cp "$mbtiles"             "$zipdir/data/enc.mbtiles"
+            cp -r assets/styles       "$zipdir/"
+            cp -r assets/fonts        "$zipdir/"
+            cp -r /tmp/shared-sprites "$zipdir/sprites"
+            cp assets/config.json     "$zipdir/config.json"
+            (cd "$zipdir" && zip -r "/tmp/styled-zips/${name}-styled.zip" .)
+            echo "  ${name}-styled.zip  $(du -sh /tmp/styled-zips/${name}-styled.zip | cut -f1)"
+          done
 
       - name: Upload styled zips to release
         env:

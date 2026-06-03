@@ -10607,7 +10607,7 @@
         ],
         [
           "has",
-          "SI"
+          "SECTR1"
         ]
       ],
       "id": "LIGHTS_sector",
@@ -10615,8 +10615,28 @@
         "icon-allow-overlap": true,
         "icon-anchor": "center",
         "icon-image": [
-          "get",
-          "SI"
+          "concat",
+          "sector_",
+          [
+            "to-string",
+            [
+              "get",
+              "SECTR1"
+            ]
+          ],
+          "_",
+          [
+            "to-string",
+            [
+              "get",
+              "SECTR2"
+            ]
+          ],
+          "_",
+          [
+            "get",
+            "COLOUR_FIRST"
+          ]
         ],
         "icon-size": 1.0
       },
@@ -10634,7 +10654,7 @@
         ],
         [
           "!has",
-          "SI"
+          "SECTR1"
         ]
       ],
       "id": "LIGHTS_symbol",

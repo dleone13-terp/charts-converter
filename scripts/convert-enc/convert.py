@@ -61,6 +61,15 @@ from typing import Optional
 
 EXPORT_ERROR_FILE_BASENAME = '.export-errors.log'
 
+
+def _fmt_angle(v) -> str:
+    """Format a sector angle to match JavaScript's String() conversion (no trailing .0)."""
+    try:
+        f = float(v)
+        return str(int(f)) if f == int(f) else str(f)
+    except (TypeError, ValueError):
+        return str(v)
+
 # Geographic radius for light sector arcs in degrees (~2.5 km at mid-latitudes).
 # Arcs are baked into the tile geometry so any MapLibre GL consumer renders them
 # without custom client code.
@@ -448,9 +457,22 @@ def _consolidate(geojsons_dir: str, user_minzoom: int, styler=None) -> tuple[lis
                         arc = _light_arc(feat)
                         if arc is not None:
                             light_arcs.append(arc)
-                        si = curr_props.get('SI')
-                        if si:
-                            sector_si.add(si)
+
+                        # Normalise COLOUR to first code and stamp as COLOUR_FIRST
+                        # so the GL style expression has a clean string to concatenate.
+                        colour_first = str(curr_props.get('COLOUR', '')).split(',')[0].strip()
+                        if colour_first:
+                            curr_props['COLOUR_FIRST'] = colour_first
+                            feat = {**feat, 'properties': curr_props}
+
+                        # Collect sector icon key from raw S-57 props — works
+                        # with or without --style, no s57style dependency.
+                        s1 = curr_props.get('SECTR1')
+                        s2 = curr_props.get('SECTR2')
+                        if s1 is not None and s2 is not None and colour_first:
+                            sector_si.add(
+                                f"sector_{_fmt_angle(s1)}_{_fmt_angle(s2)}_{colour_first}"
+                            )
 
         consolidated.append({'file': out_path, 'source_files': sources})
 

@@ -94,6 +94,22 @@ def generate_styles(server: str, data_name: str, out_dir: str, tile_url: str | N
             # determines the icons. Point at {theme}_simplified so tileserver-gl
             # resolves sprites/{theme}_simplified.{png,json} without per-unit copies.
             style_obj["sprite"] = f"{theme.lower()}_simplified"
+
+            # Patch LIGHTS layers to use raw S-57 properties instead of the
+            # s57style SI property, so sector icons render for any chart
+            # regardless of whether --style was used during conversion.
+            for layer in style_obj.get("layers", []):
+                if layer.get("id") == "LIGHTS_sector":
+                    layer["filter"] = ["all", ["==", "$type", "Point"], ["has", "SECTR1"]]
+                    layer["layout"]["icon-image"] = [
+                        "concat", "sector_",
+                        ["to-string", ["get", "SECTR1"]], "_",
+                        ["to-string", ["get", "SECTR2"]], "_",
+                        ["get", "COLOUR_FIRST"],
+                    ]
+                elif layer.get("id") == "LIGHTS_symbol":
+                    layer["filter"] = ["all", ["==", "$type", "Point"], ["!has", "SECTR1"]]
+
             # Insert light_arcs line layer immediately before the LIGHTS symbol layers.
             layers = style_obj.get("layers", [])
             lights_idx = next(

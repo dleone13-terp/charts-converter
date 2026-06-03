@@ -56,11 +56,6 @@ jobs:
         district: ${{ fromJson(needs.check-updates.outputs.districts_to_run) }}
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: assets
-          sparse-checkout-cone-mode: false
-
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -108,40 +103,12 @@ jobs:
           path: /tmp/enc-output/noaa-enc-${{ matrix.district }}.mbtiles
           retention-days: 1
 
-      - name: Create styled zip
-        if: success() && hashFiles('assets/styles') != ''
-        run: |
-          NAME="noaa-enc-${{ matrix.district }}"
-          ZIPDIR="/tmp/styled-zip-${{ matrix.district }}"
-          mkdir -p "$ZIPDIR/data"
-
-          # MBTiles as enc.mbtiles — styles reference this canonical name
-          cp "/tmp/enc-output/${NAME}.mbtiles" "$ZIPDIR/data/enc.mbtiles"
-
-          # Base styles, sprites, fonts from committed assets
-          cp -r assets/styles assets/fonts "$ZIPDIR/"
-          cp -r assets/sprites "$ZIPDIR/"
-
-          # Merge sector icons into the spritesheet if sectors JSON was produced
-          SECTORS="/tmp/enc-output/${NAME}-sectors.json"
-          if [ -f "$SECTORS" ]; then
-            pip install pillow -q
-            python3 scripts/generate-styles/generate_sector_sprites.py \
-              "$SECTORS" "$ZIPDIR/sprites"
-          fi
-
-          cp assets/config.json "$ZIPDIR/config.json"
-
-          cd "$ZIPDIR"
-          zip -r "/tmp/enc-output/${NAME}-styled.zip" .
-          echo "Styled zip: $(du -sh /tmp/enc-output/${NAME}-styled.zip | cut -f1)"
-
-      - name: Upload styled zip artifact
-        if: success() && hashFiles('assets/styles') != ''
+      - name: Upload sectors JSON artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: styled-zip-${{ matrix.district }}
-          path: /tmp/enc-output/noaa-enc-${{ matrix.district }}-styled.zip
+          name: sectors-${{ matrix.district }}
+          path: /tmp/enc-output/noaa-enc-${{ matrix.district }}-sectors.json
           retention-days: 1
 
       - name: Upload result artifact
@@ -252,12 +219,51 @@ jobs:
             gh release upload noaa-latest "$f" --clobber
           done
 
-      - name: Download styled zip artifacts
+      - name: Download sectors JSON artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: styled-zip-*
-          path: /tmp/styled-zips
+          pattern: sectors-*
+          path: /tmp/sectors
           merge-multiple: true
+
+      - name: Build shared sector spritesheet and create styled zips
+        run: |
+          pip install pillow -q
+
+          # Merge all per-district sectors JSONs into one deduplicated list
+          python3 - <<'PY'
+          import json, glob, os
+          combined = set()
+          for f in glob.glob('/tmp/sectors/*.json'):
+              combined.update(json.load(open(f)))
+          out = sorted(combined)
+          with open('/tmp/combined-sectors.json', 'w') as fh:
+              json.dump(out, fh, indent=2)
+          print(f"Combined sectors: {len(out)} unique configs across all districts")
+          PY
+
+          # Start from the committed base sprites and merge sector icons in
+          cp -r assets/sprites /tmp/shared-sprites
+          if python3 -c "import json; v=json.load(open('/tmp/combined-sectors.json')); exit(0 if v else 1)" 2>/dev/null; then
+            python3 scripts/generate-styles/generate_sector_sprites.py \
+              /tmp/combined-sectors.json /tmp/shared-sprites
+          fi
+
+          # Create one styled zip per district using the shared spritesheet
+          mkdir -p /tmp/styled-zips
+          for mbtiles in /tmp/mbtiles/noaa-enc-*.mbtiles; do
+            [ -f "$mbtiles" ] || continue
+            name=$(basename "$mbtiles" .mbtiles)
+            zipdir="/tmp/zipbuild-${name}"
+            mkdir -p "$zipdir/data"
+            cp "$mbtiles"           "$zipdir/data/enc.mbtiles"
+            cp -r assets/styles     "$zipdir/"
+            cp -r assets/fonts      "$zipdir/"
+            cp -r /tmp/shared-sprites "$zipdir/sprites"
+            cp assets/config.json   "$zipdir/config.json"
+            (cd "$zipdir" && zip -r "/tmp/styled-zips/${name}-styled.zip" .)
+            echo "  ${name}-styled.zip  $(du -sh /tmp/styled-zips/${name}-styled.zip | cut -f1)"
+          done
 
       - name: Upload styled zips to release
         env:
