@@ -78,21 +78,13 @@ generate-styles:
 # Generate committed release assets: styles (data-name=enc), sprites, fonts.
 # Run this whenever the s57style rendering logic changes, then commit assets/.
 # Requires: s57style module (make py-module) and the njord sibling repo.
-# Also merges sector sprites from serve/data/$(NAME)-sectors.json if present.
+# Sector sprites are chart-specific and added at zip time per chart — NOT here.
 generate-assets:
 	@echo "==> Generating packaged assets (data-name=enc) → $(ASSETS_DIR)"
 	python3 "$(SCRIPTS_DIR)/generate-styles/generate_styles.py" \
 		--server "http://localhost:8080" \
 		--data-name "enc" \
 		--out-dir "$(ASSETS_DIR)"
-	@SECTORS="$(SERVE_DIR)/data/$(NAME)-sectors.json"; \
-	if [ -f "$$SECTORS" ]; then \
-	  echo "==> Merging sector sprites from $$SECTORS..."; \
-	  python3 "$(SCRIPTS_DIR)/generate-styles/generate_sector_sprites.py" \
-	    "$$SECTORS" "$(ASSETS_DIR)/sprites"; \
-	else \
-	  echo "    (no sectors JSON found at $$SECTORS — skipping sector sprites)"; \
-	fi
 	@echo "    Done — commit assets/ so CI can include styles/sprites/fonts in release zips."
 
 ## ── Tileserver-gl (Docker) ───────────────────────────────────────────────────
