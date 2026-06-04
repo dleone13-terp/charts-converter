@@ -1,7 +1,6 @@
-# ── Stage 1: build s57style Python wheel ──────────────────────────────────────
-# python:3.14-slim matches the runtime image's Python minor version (3.14.x),
-# so the compiled wheel targets the correct ABI without needing the full
-# runtime base image in the build stage.
+# ── Stage 1: build and pre-install the s57style Python wheel ──────────────────
+# python:3.14-slim matches the runtime image's Python minor version (3.14.x).
+# We install the wheel into /install so it can be copied without pip at runtime.
 FROM python:3.14-slim AS builder
 
 RUN apt-get update -qq && \
@@ -21,18 +20,21 @@ COPY Cargo.toml /build/Cargo.toml
 COPY crates/    /build/crates/
 COPY resources/ /build/resources/
 
+# Build wheel, then install to /install so the runtime stage can COPY it in
 RUN cd /build && \
     PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1 \
     maturin build --release \
         --manifest-path crates/s57style-python/Cargo.toml \
-        --out /wheels
+        --out /wheels && \
+    pip install --prefix=/install /wheels/*.whl
 
 # ── Stage 2: runtime image ─────────────────────────────────────────────────────
 FROM ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0
 
-# Install the pre-built wheel (no Rust toolchain in final image)
-COPY --from=builder /wheels/*.whl /tmp/
-RUN pip install /tmp/*.whl --break-system-packages && rm /tmp/*.whl
+# Copy the installed s57style package directly — no pip needed at runtime.
+# Both builder (python:3.14-slim) and runtime (charts-toolbox) use Python 3.14.x
+# so the site-packages path and ABI are compatible.
+COPY --from=builder /install/lib/python3.14/ /usr/local/lib/python3.14/
 
 COPY convert.py /usr/local/bin/convert.py
 
