@@ -14,8 +14,7 @@
 #   make serve              # start tileserver-gl (Docker)
 #   make viewer             # start Vite dev server
 
-BOAT_DIR      := $(realpath $(CURDIR)/..)
-STYLE_RUST    := $(BOAT_DIR)/openenc-styling-rust
+STYLE_RUST    := $(CURDIR)/scripts/convert-enc
 PY_CRATE      := $(STYLE_RUST)/crates/s57style-python
 WHEEL_DIR     := $(STYLE_RUST)/target/wheels
 

@@ -6,6 +6,9 @@ on:
     paths:
       - scripts/convert-enc/convert.py
       - scripts/convert-enc/Dockerfile
+      - scripts/convert-enc/Cargo.toml
+      - scripts/convert-enc/crates/**
+      - scripts/convert-enc/resources/**
   workflow_dispatch:
 
 jobs:
