@@ -1,9 +1,8 @@
 # ── Stage 1: build s57style Python wheel ──────────────────────────────────────
-# Use the same base image as the runtime stage so the compiled wheel targets
-# the exact same Python ABI — no version mismatch possible.
-FROM ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0 AS builder
-
-USER root
+# python:3.14-slim matches the runtime image's Python minor version (3.14.x),
+# so the compiled wheel targets the correct ABI without needing the full
+# runtime base image in the build stage.
+FROM python:3.14-slim AS builder
 
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
@@ -12,12 +11,11 @@ RUN apt-get update -qq && \
 
 # Install Rust stable toolchain
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
-        | sh -s -- -y --default-toolchain stable --profile minimal && \
-    echo 'source $HOME/.cargo/env' >> /root/.bashrc
+        | sh -s -- -y --default-toolchain stable --profile minimal
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-RUN pip install maturin --break-system-packages -q
+RUN pip install maturin -q
 
 COPY Cargo.toml /build/Cargo.toml
 COPY crates/    /build/crates/
