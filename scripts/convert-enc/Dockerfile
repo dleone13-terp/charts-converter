@@ -22,6 +22,7 @@ COPY crates/    /build/crates/
 COPY resources/ /build/resources/
 
 RUN cd /build && \
+    PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1 \
     maturin build --release \
         --manifest-path crates/s57style-python/Cargo.toml \
         --out /wheels
