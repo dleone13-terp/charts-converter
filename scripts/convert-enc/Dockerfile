@@ -3,6 +3,8 @@
 # the exact same Python ABI — no version mismatch possible.
 FROM ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0 AS builder
 
+USER root
+
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
         curl build-essential patchelf libssl-dev pkg-config && \
