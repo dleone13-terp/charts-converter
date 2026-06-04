@@ -77,7 +77,23 @@ jobs:
             -v /tmp/district.zip:/data/input.zip:ro \
             -v /tmp/enc-output:/data/output \
             ghcr.io/${{ github.repository_owner }}/enc-converter:latest \
-            /data/input.zip /data/output "noaa-enc-${{ matrix.district }}"
+            /data/input.zip /data/output "noaa-enc-${{ matrix.district }}" --style
+
+      - name: Verify MBTiles integrity
+        run: |
+          OUT="/tmp/enc-output/noaa-enc-${{ matrix.district }}.mbtiles"
+          if [ ! -f "$OUT" ]; then
+            echo "ERROR: MBTiles file not found: $OUT"
+            exit 1
+          fi
+          echo "Checking SQLite integrity of $(basename "$OUT") ($(du -sh "$OUT" | cut -f1))…"
+          CHECK=$(sqlite3 "$OUT" "PRAGMA integrity_check;" 2>&1)
+          echo "integrity_check result: $CHECK"
+          if [ "$CHECK" != "ok" ]; then
+            echo "ERROR: MBTiles integrity check failed!"
+            exit 1
+          fi
+          echo "Integrity check passed."
 
       - name: Write result JSON
         if: always()
@@ -182,7 +198,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE=$(date -u +%Y-%m-%d)
+          UPDATED=$(date -u +"%Y-%m-%d %H:%M UTC")
           NOTES="NOAA ENCs converted to MBTiles by Coast Guard District. Updated weekly.
+
+          **Assets last updated: ${UPDATED}**
+          _(Note: the release \`published_at\` timestamp reflects when this release tag was first created, not when assets were last uploaded.)_
 
           | District | Coverage |
           |---|---|
@@ -254,6 +274,15 @@ jobs:
           for mbtiles in /tmp/mbtiles/noaa-enc-*.mbtiles; do
             [ -f "$mbtiles" ] || continue
             name=$(basename "$mbtiles" .mbtiles)
+
+            # Integrity check before packaging
+            echo "Checking integrity of $name…"
+            CHECK=$(sqlite3 "$mbtiles" "PRAGMA integrity_check;" 2>&1)
+            if [ "$CHECK" != "ok" ]; then
+              echo "ERROR: $name failed integrity check: $CHECK — skipping"
+              continue
+            fi
+
             zipdir="/tmp/zipbuild-${name}"
             mkdir -p "$zipdir/data"
             cp "$mbtiles"           "$zipdir/data/enc.mbtiles"
