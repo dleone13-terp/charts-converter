@@ -31,10 +31,9 @@ RUN cd /build && \
 # ── Stage 2: runtime image ─────────────────────────────────────────────────────
 FROM ghcr.io/dirkwa/signalk-charts-provider-simple/charts-toolbox:1.0.0
 
-# Copy the installed s57style package directly — no pip needed at runtime.
-# Both builder (python:3.14-slim) and runtime (charts-toolbox) use Python 3.14.x
-# so the site-packages path and ABI are compatible.
-COPY --from=builder /install/lib/python3.14/ /usr/local/lib/python3.14/
+# pip --prefix installs to site-packages; the runtime Python (Debian-based)
+# resolves imports from dist-packages, so copy there explicitly.
+COPY --from=builder /install/lib/python3.14/site-packages/ /usr/local/lib/python3.14/dist-packages/
 
 COPY convert.py /usr/local/bin/convert.py
 
